@@ -52,7 +52,6 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
   return (
     <div className="bg-[#202124] text-white h-screen flex flex-col gap-8 items-center justify-center px-6">
       <h1 className="text-6xl font-medium">Hadish</h1>
-      {watch("search").length}
 
       <div
         className={`flex w-full max-w-2xl flex-row items-center gap-2 rounded-[${borderRadius}] border py-2 px-4 transition-all duration-300`}
