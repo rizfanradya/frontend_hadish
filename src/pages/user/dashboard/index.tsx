@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 import { FaSearch } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import { HiBars3 } from "react-icons/hi2";
-import { ACCESS_TOKEN } from "../../../utils/constant";
+import { ACCESS_TOKEN, toLogIn, toSignIn } from "../../../utils/constant";
 
 export default function UserDashboard({ docTitle }: { docTitle: string }) {
   const [openNav, setOpenNav] = useState(false);
@@ -85,8 +85,9 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
             onPointerEnterCapture={undefined}
             onPointerLeaveCapture={undefined}
           >
-            Material Tailwind
+            Hadish
           </Typography>
+
           {ACCESS_TOKEN && (
             <div className="hidden lg:block">
               <List
@@ -136,28 +137,47 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
               </List>
             </div>
           )}
+
           <div className="hidden gap-2 lg:flex">
-            <Button
-              variant="text"
-              size="sm"
-              color="white"
-              placeholder={undefined}
+            <Typography
+              href={toLogIn}
+              as="a"
               onPointerEnterCapture={undefined}
               onPointerLeaveCapture={undefined}
-            >
-              Log In
-            </Button>
-            <Button
-              variant="gradient"
-              size="sm"
-              color="blue"
               placeholder={undefined}
+            >
+              <Button
+                variant="text"
+                size="sm"
+                color="white"
+                placeholder={undefined}
+                onPointerEnterCapture={undefined}
+                onPointerLeaveCapture={undefined}
+              >
+                Log In
+              </Button>
+            </Typography>
+
+            <Typography
+              href={toSignIn}
+              as="a"
               onPointerEnterCapture={undefined}
               onPointerLeaveCapture={undefined}
+              placeholder={undefined}
             >
-              Sign In
-            </Button>
+              <Button
+                variant="gradient"
+                size="sm"
+                color="blue"
+                placeholder={undefined}
+                onPointerEnterCapture={undefined}
+                onPointerLeaveCapture={undefined}
+              >
+                Sign In
+              </Button>
+            </Typography>
           </div>
+
           <IconButton
             variant="text"
             color="white"
@@ -225,28 +245,47 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
           )}
 
           <div className="flex items-center w-full gap-2 flex-nowrap lg:hidden">
-            <Button
-              variant="outlined"
-              size="sm"
-              color="white"
-              fullWidth
-              placeholder={undefined}
+            <Typography
+              href={toLogIn}
+              as="a"
+              className="w-full"
               onPointerEnterCapture={undefined}
               onPointerLeaveCapture={undefined}
-            >
-              Log In
-            </Button>
-            <Button
-              variant="gradient"
-              size="sm"
-              color="blue"
-              fullWidth
               placeholder={undefined}
+            >
+              <Button
+                variant="outlined"
+                size="sm"
+                color="white"
+                fullWidth
+                placeholder={undefined}
+                onPointerEnterCapture={undefined}
+                onPointerLeaveCapture={undefined}
+              >
+                Log In
+              </Button>
+            </Typography>
+
+            <Typography
+              href={toSignIn}
+              as="a"
+              className="w-full"
               onPointerEnterCapture={undefined}
               onPointerLeaveCapture={undefined}
+              placeholder={undefined}
             >
-              Sign In
-            </Button>
+              <Button
+                variant="gradient"
+                size="sm"
+                color="blue"
+                fullWidth
+                placeholder={undefined}
+                onPointerEnterCapture={undefined}
+                onPointerLeaveCapture={undefined}
+              >
+                Sign In
+              </Button>
+            </Typography>
           </div>
         </Collapse>
       </Navbar>
