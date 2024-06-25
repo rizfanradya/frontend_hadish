@@ -14,9 +14,15 @@ import { useForm } from "react-hook-form";
 import { FaSearch } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import { HiBars3 } from "react-icons/hi2";
-import { ACCESS_TOKEN, toSignIn, toSignUp } from "../../../utils/constant";
+import { toSignIn, toSignUp } from "../../../utils/constant";
+import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import useSignOut from "react-auth-kit/hooks/useSignOut";
 
 export default function UserDashboard({ docTitle }: { docTitle: string }) {
+  const authHeader = useAuthHeader();
+  const authUser = useAuthUser();
+  const signOut = useSignOut();
   const [openNav, setOpenNav] = useState(false);
   const [charactersPerIncrement, setCharactersPerIncrement] = useState(75);
   const [textareaHeight, setTextareaHeight] = useState("56px");
@@ -88,7 +94,7 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
             Hadish
           </Typography>
 
-          {ACCESS_TOKEN && (
+          {authHeader && authUser ? (
             <div className="hidden lg:block">
               <List
                 className="p-0 mt-4 mb-6 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1"
@@ -136,46 +142,75 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
                 </Typography>
               </List>
             </div>
+          ) : (
+            ""
           )}
 
           <div className="hidden gap-2 lg:flex">
-            <Typography
-              href={toSignIn}
-              as="a"
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-              placeholder={undefined}
-            >
-              <Button
-                variant="text"
-                size="sm"
-                color="white"
-                placeholder={undefined}
+            {authHeader && authUser ? (
+              <Typography
+                className="w-full"
                 onPointerEnterCapture={undefined}
                 onPointerLeaveCapture={undefined}
+                placeholder={undefined}
+                onClick={() => {
+                  signOut();
+                  window.location.reload();
+                }}
               >
-                Sign In
-              </Button>
-            </Typography>
+                <Button
+                  variant="gradient"
+                  size="sm"
+                  color="red"
+                  fullWidth
+                  placeholder={undefined}
+                  onPointerEnterCapture={undefined}
+                  onPointerLeaveCapture={undefined}
+                >
+                  Logout
+                </Button>
+              </Typography>
+            ) : (
+              <>
+                <Typography
+                  href={toSignIn}
+                  as="a"
+                  onPointerEnterCapture={undefined}
+                  onPointerLeaveCapture={undefined}
+                  placeholder={undefined}
+                >
+                  <Button
+                    variant="text"
+                    size="sm"
+                    color="white"
+                    placeholder={undefined}
+                    onPointerEnterCapture={undefined}
+                    onPointerLeaveCapture={undefined}
+                  >
+                    Sign In
+                  </Button>
+                </Typography>
 
-            <Typography
-              href={toSignUp}
-              as="a"
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-              placeholder={undefined}
-            >
-              <Button
-                variant="gradient"
-                size="sm"
-                color="blue"
-                placeholder={undefined}
-                onPointerEnterCapture={undefined}
-                onPointerLeaveCapture={undefined}
-              >
-                Sign Up
-              </Button>
-            </Typography>
+                <Typography
+                  href={toSignUp}
+                  as="a"
+                  onPointerEnterCapture={undefined}
+                  onPointerLeaveCapture={undefined}
+                  placeholder={undefined}
+                >
+                  <Button
+                    variant="gradient"
+                    size="sm"
+                    color="blue"
+                    placeholder={undefined}
+                    onPointerEnterCapture={undefined}
+                    onPointerLeaveCapture={undefined}
+                  >
+                    Sign Up
+                  </Button>
+                </Typography>
+              </>
+            )}
           </div>
 
           <IconButton
@@ -196,7 +231,7 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
         </div>
 
         <Collapse open={openNav}>
-          {ACCESS_TOKEN && (
+          {authHeader && authUser ? (
             <List
               className="p-0 mt-4 mb-6 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1"
               placeholder={undefined}
@@ -242,50 +277,79 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
                 </ListItem>
               </Typography>
             </List>
+          ) : (
+            ""
           )}
 
           <div className="flex items-center w-full gap-2 flex-nowrap lg:hidden">
-            <Typography
-              href={toSignIn}
-              as="a"
-              className="w-full"
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-              placeholder={undefined}
-            >
-              <Button
-                variant="outlined"
-                size="sm"
-                color="white"
-                fullWidth
-                placeholder={undefined}
+            {authHeader && authUser ? (
+              <Typography
+                className="w-full"
                 onPointerEnterCapture={undefined}
                 onPointerLeaveCapture={undefined}
+                placeholder={undefined}
+                onClick={() => {
+                  signOut();
+                  window.location.reload();
+                }}
               >
-                Sign In
-              </Button>
-            </Typography>
+                <Button
+                  variant="gradient"
+                  size="sm"
+                  color="red"
+                  fullWidth
+                  placeholder={undefined}
+                  onPointerEnterCapture={undefined}
+                  onPointerLeaveCapture={undefined}
+                >
+                  Logout
+                </Button>
+              </Typography>
+            ) : (
+              <>
+                <Typography
+                  href={toSignIn}
+                  as="a"
+                  className="w-full"
+                  onPointerEnterCapture={undefined}
+                  onPointerLeaveCapture={undefined}
+                  placeholder={undefined}
+                >
+                  <Button
+                    variant="outlined"
+                    size="sm"
+                    color="white"
+                    fullWidth
+                    placeholder={undefined}
+                    onPointerEnterCapture={undefined}
+                    onPointerLeaveCapture={undefined}
+                  >
+                    Sign In
+                  </Button>
+                </Typography>
 
-            <Typography
-              href={toSignUp}
-              as="a"
-              className="w-full"
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-              placeholder={undefined}
-            >
-              <Button
-                variant="gradient"
-                size="sm"
-                color="blue"
-                fullWidth
-                placeholder={undefined}
-                onPointerEnterCapture={undefined}
-                onPointerLeaveCapture={undefined}
-              >
-                Sign Up
-              </Button>
-            </Typography>
+                <Typography
+                  href={toSignUp}
+                  as="a"
+                  className="w-full"
+                  onPointerEnterCapture={undefined}
+                  onPointerLeaveCapture={undefined}
+                  placeholder={undefined}
+                >
+                  <Button
+                    variant="gradient"
+                    size="sm"
+                    color="blue"
+                    fullWidth
+                    placeholder={undefined}
+                    onPointerEnterCapture={undefined}
+                    onPointerLeaveCapture={undefined}
+                  >
+                    Sign Up
+                  </Button>
+                </Typography>
+              </>
+            )}
           </div>
         </Collapse>
       </Navbar>
