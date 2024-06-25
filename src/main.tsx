@@ -18,15 +18,15 @@ import AuthProvider from "react-auth-kit/AuthProvider";
 const router = createBrowserRouter([
   {
     path: toUserDashboard,
-    element: <UserDashboard docTitle="Hadish - Home" />,
+    element: <UserDashboard docTitle="Fake Hadish - Home" />,
   },
   {
     path: toSignUp,
-    element: <SignUp docTitle="Hadish - Sign Up" />,
+    element: <SignUp docTitle="Fake Hadish - Sign Up" />,
   },
   {
     path: toSignIn,
-    element: <SignIn docTitle="Hadish - Sign In" />,
+    element: <SignIn docTitle="Fake Hadish - Sign In" />,
   },
 ]);
 

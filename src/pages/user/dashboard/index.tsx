@@ -91,7 +91,7 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
             onPointerEnterCapture={undefined}
             onPointerLeaveCapture={undefined}
           >
-            Hadish
+            Fake Hadish
           </Typography>
 
           {authHeader && authUser ? (
@@ -137,7 +137,7 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
                     onPointerEnterCapture={undefined}
                     onPointerLeaveCapture={undefined}
                   >
-                    Contact Us
+                    Table
                   </ListItem>
                 </Typography>
               </List>
@@ -273,7 +273,7 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
                   onPointerEnterCapture={undefined}
                   onPointerLeaveCapture={undefined}
                 >
-                  Contact Us
+                  Table
                 </ListItem>
               </Typography>
             </List>
