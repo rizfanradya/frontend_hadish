@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 import { FaSearch } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import { HiBars3 } from "react-icons/hi2";
-import { ACCESS_TOKEN, toLogIn, toSignIn } from "../../../utils/constant";
+import { ACCESS_TOKEN, toSignIn, toSignUp } from "../../../utils/constant";
 
 export default function UserDashboard({ docTitle }: { docTitle: string }) {
   const [openNav, setOpenNav] = useState(false);
@@ -140,7 +140,7 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
 
           <div className="hidden gap-2 lg:flex">
             <Typography
-              href={toLogIn}
+              href={toSignIn}
               as="a"
               onPointerEnterCapture={undefined}
               onPointerLeaveCapture={undefined}
@@ -154,12 +154,12 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
                 onPointerEnterCapture={undefined}
                 onPointerLeaveCapture={undefined}
               >
-                Log In
+                Sign In
               </Button>
             </Typography>
 
             <Typography
-              href={toSignIn}
+              href={toSignUp}
               as="a"
               onPointerEnterCapture={undefined}
               onPointerLeaveCapture={undefined}
@@ -173,7 +173,7 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
                 onPointerEnterCapture={undefined}
                 onPointerLeaveCapture={undefined}
               >
-                Sign In
+                Sign Up
               </Button>
             </Typography>
           </div>
@@ -246,7 +246,7 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
 
           <div className="flex items-center w-full gap-2 flex-nowrap lg:hidden">
             <Typography
-              href={toLogIn}
+              href={toSignIn}
               as="a"
               className="w-full"
               onPointerEnterCapture={undefined}
@@ -262,12 +262,12 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
                 onPointerEnterCapture={undefined}
                 onPointerLeaveCapture={undefined}
               >
-                Log In
+                Sign In
               </Button>
             </Typography>
 
             <Typography
-              href={toSignIn}
+              href={toSignUp}
               as="a"
               className="w-full"
               onPointerEnterCapture={undefined}
@@ -283,7 +283,7 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
                 onPointerEnterCapture={undefined}
                 onPointerLeaveCapture={undefined}
               >
-                Sign In
+                Sign Up
               </Button>
             </Typography>
           </div>

@@ -4,6 +4,6 @@ export const ACCESS_TOKEN_NAME = "hadish_access_token";
 export const ACCESS_TOKEN = localStorage.getItem(ACCESS_TOKEN_NAME);
 export const AUTHORIZATION = `Bearer ${ACCESS_TOKEN}`;
 
+export const toSignUp = "/signup";
 export const toSignIn = "/signin";
-export const toLogIn = "/login";
 export const toUserDashboard = "/";
