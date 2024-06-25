@@ -1,34 +1,22 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Button, Input, Typography } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { toSignIn } from "../../../utils/constant";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import { toSignUp, toUserDashboard } from "../../../utils/constant";
 import axiosInstance from "../../../utils/axiosInstance";
+import { Button, Input, Typography } from "@material-tailwind/react";
+import { isEmail, isStrongPassword } from "validator";
 import { FaInfoCircle, FaRegCheckCircle } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
-import { isEmail, isStrongPassword } from "validator";
+import { Link } from "react-router-dom";
 
 export default function SignIn({ docTitle }: { docTitle: string }) {
   const [loading, setLoading] = useState<boolean>(false);
   const [inputTypePassword, setInputTypePassword] = useState<boolean>(true);
-  const [refreshUsernameStatus, setRefreshUsernameStatus] =
-    useState<boolean>(false);
-  const [inputTypeConfirmPassword, setInputTypeConfirmPassword] =
-    useState<boolean>(true);
-  const [usernameStatus, setUsernameStatus] = useState<
-    "idle" | "checking" | "available" | "taken"
-  >("idle");
   const { register, watch } = useForm<{
-    username: string;
     email: string;
-    first_name: string;
-    last_name: string;
     password: string;
-    confirm_password: string;
   }>();
 
   useEffect(() => {
@@ -37,59 +25,27 @@ export default function SignIn({ docTitle }: { docTitle: string }) {
     })();
   }, []);
 
-  useEffect(() => {
-    const username = watch("username");
-    if (!username) {
-      setUsernameStatus("idle");
-      return;
-    }
-    async function checkUsername() {
-      setUsernameStatus("checking");
-      try {
-        await axiosInstance.get(`/user/username/${watch("username")}`);
-        setUsernameStatus("taken");
-      } catch (error) {
-        setUsernameStatus("available");
-      }
-    }
-    const timeoutId = setTimeout(() => {
-      checkUsername();
-    }, 1000);
-    return () => clearTimeout(timeoutId);
-  }, [watch("username"), refreshUsernameStatus]);
-
   async function onSubmit() {
-    if (usernameStatus === "taken") {
-      Swal.fire({
-        icon: "error",
-        title: "Username Taken",
-        text: "The username is already taken. Please choose another one.",
-      });
-      return;
-    }
     try {
       setLoading(true);
-      await axiosInstance.post(`/user`, {
-        created_by: 0,
-        updated_by: 0,
-        username: watch("username"),
-        first_name: watch("first_name"),
-        last_name: watch("last_name"),
-        email: watch("email"),
-        password: watch("password"),
-        confirm_password: watch("confirm_password"),
-      });
-      window.location.href = toSignIn;
+      await axiosInstance.post(
+        `/token`,
+        {
+          username: watch("email"),
+          password: watch("password"),
+        },
+        { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+      );
+      window.location.href = toUserDashboard;
     } catch (error) {
       Swal.fire({
         icon: "error",
-        title: "Username Taken",
-        text: "The username is already taken. Please choose another one.",
+        title: "Error",
+        text: "Server error 404",
         allowOutsideClick: false,
       });
     }
     setLoading(false);
-    setRefreshUsernameStatus(!refreshUsernameStatus);
   }
 
   return (
@@ -102,7 +58,7 @@ export default function SignIn({ docTitle }: { docTitle: string }) {
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}
         >
-          Join Us Today
+          Sign In
         </Typography>
         <Typography
           variant="paragraph"
@@ -112,7 +68,7 @@ export default function SignIn({ docTitle }: { docTitle: string }) {
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}
         >
-          Enter your information to register.
+          Enter your Email and Password to Sign In.
         </Typography>
       </div>
 
@@ -126,31 +82,30 @@ export default function SignIn({ docTitle }: { docTitle: string }) {
             onPointerEnterCapture={undefined}
             onPointerLeaveCapture={undefined}
           >
-            Username
+            Email
           </Typography>
           <div>
             <Input
-              {...register("username")}
+              {...register("email")}
               size="lg"
-              icon={
-                usernameStatus === "available" ? (
-                  <FaRegCheckCircle size={20} color="green" />
-                ) : (
-                  usernameStatus === "taken" && (
-                    <ImCross size={16} color="red" />
-                  )
-                )
-              }
-              error={usernameStatus === "taken"}
-              success={usernameStatus === "available"}
+              type="email"
+              error={!isEmail(watch("email") ?? "")}
+              success={isEmail(watch("email") ?? "")}
               labelProps={{
                 className: "before:content-none",
               }}
               onPointerEnterCapture={undefined}
               onPointerLeaveCapture={undefined}
               crossOrigin={undefined}
+              icon={
+                isEmail(watch("email") ?? "") ? (
+                  <FaRegCheckCircle size={20} color="green" />
+                ) : (
+                  <ImCross size={16} color="red" />
+                )
+              }
             />
-            {usernameStatus === "taken" && (
+            {!isEmail(watch("email") ?? "") && (
               <Typography
                 variant="small"
                 color="red"
@@ -160,107 +115,10 @@ export default function SignIn({ docTitle }: { docTitle: string }) {
                 onPointerLeaveCapture={undefined}
               >
                 <FaInfoCircle size={14} />
-                User Already Exist.
+                Email Invalid
               </Typography>
             )}
           </div>
-        </div>
-
-        <div className="flex flex-col gap-4">
-          <Typography
-            variant="small"
-            color="blue-gray"
-            className="-mb-3 font-medium"
-            placeholder={undefined}
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
-          >
-            Email
-          </Typography>
-          <Input
-            {...register("email")}
-            size="lg"
-            type="email"
-            error={!isEmail(watch("email") ?? "")}
-            success={isEmail(watch("email") ?? "")}
-            labelProps={{
-              className: "before:content-none",
-            }}
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
-            crossOrigin={undefined}
-            icon={
-              isEmail(watch("email") ?? "") ? (
-                <FaRegCheckCircle size={20} color="green" />
-              ) : (
-                <ImCross size={16} color="red" />
-              )
-            }
-          />
-        </div>
-
-        <div className="flex flex-col gap-4">
-          <Typography
-            variant="small"
-            color="blue-gray"
-            className="-mb-3 font-medium"
-            placeholder={undefined}
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
-          >
-            First Name
-          </Typography>
-          <Input
-            {...register("first_name")}
-            size="lg"
-            labelProps={{
-              className: "before:content-none",
-            }}
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
-            crossOrigin={undefined}
-            error={!watch("first_name") ? true : false}
-            success={watch("first_name") ? true : false}
-            icon={
-              watch("first_name") ? (
-                <FaRegCheckCircle size={20} color="green" />
-              ) : (
-                <ImCross size={16} color="red" />
-              )
-            }
-          />
-        </div>
-
-        <div className="flex flex-col gap-4">
-          <Typography
-            variant="small"
-            color="blue-gray"
-            className="-mb-3 font-medium"
-            placeholder={undefined}
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
-          >
-            Last Name
-          </Typography>
-          <Input
-            {...register("last_name")}
-            size="lg"
-            labelProps={{
-              className: "before:content-none",
-            }}
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
-            crossOrigin={undefined}
-            error={!watch("last_name") ? true : false}
-            success={watch("last_name") ? true : false}
-            icon={
-              watch("last_name") ? (
-                <FaRegCheckCircle size={20} color="green" />
-              ) : (
-                <ImCross size={16} color="red" />
-              )
-            }
-          />
         </div>
 
         <div className="flex flex-col gap-4">
@@ -323,77 +181,7 @@ export default function SignIn({ docTitle }: { docTitle: string }) {
                 onPointerLeaveCapture={undefined}
               >
                 <FaInfoCircle size={14} />
-                Use at least 8 characters, one uppercase, one lowercase and one
-                number.
-              </Typography>
-            )}
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-4">
-          <Typography
-            variant="small"
-            color="blue-gray"
-            className="-mb-3 font-medium"
-            placeholder={undefined}
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
-          >
-            Confirm Password
-          </Typography>
-          <div>
-            <div className="relative flex items-center w-full">
-              <Input
-                {...register("confirm_password")}
-                size="lg"
-                type={inputTypeConfirmPassword ? "password" : "text"}
-                error={watch("password") !== watch("confirm_password")}
-                success={watch("password") === watch("confirm_password")}
-                labelProps={{
-                  className: "before:content-none",
-                }}
-                onPointerEnterCapture={undefined}
-                onPointerLeaveCapture={undefined}
-                crossOrigin={undefined}
-                icon={
-                  watch("password") === watch("confirm_password") ? (
-                    <FaRegCheckCircle size={20} color="green" />
-                  ) : (
-                    watch("password") !== watch("confirm_password") && (
-                      <ImCross size={16} color="red" />
-                    )
-                  )
-                }
-              />
-
-              <div className="!absolute right-10 cursor-pointer">
-                {inputTypeConfirmPassword && (
-                  <FaEye
-                    size={20}
-                    color="gray"
-                    onClick={() => setInputTypeConfirmPassword(false)}
-                  />
-                )}
-                {!inputTypeConfirmPassword && (
-                  <FaEyeSlash
-                    size={22}
-                    color="gray"
-                    onClick={() => setInputTypeConfirmPassword(true)}
-                  />
-                )}
-              </div>
-            </div>
-            {watch("password") !== watch("confirm_password") && (
-              <Typography
-                variant="small"
-                color="red"
-                className="flex items-center gap-1 mt-2 font-normal"
-                placeholder={undefined}
-                onPointerEnterCapture={undefined}
-                onPointerLeaveCapture={undefined}
-              >
-                <FaInfoCircle size={14} />
-                Password Not Match.
+                Password Invalid
               </Typography>
             )}
           </div>
@@ -408,12 +196,8 @@ export default function SignIn({ docTitle }: { docTitle: string }) {
           onClick={() => onSubmit()}
           loading={loading}
           disabled={
-            usernameStatus !== "available" ||
             !isEmail(watch("email") ?? "") ||
-            (!watch("first_name") ? true : false) ||
-            (!watch("last_name") ? true : false) ||
-            !isStrongPassword(watch("password") ?? "") ||
-            watch("password") !== watch("confirm_password")
+            !isStrongPassword(watch("password") ?? "")
           }
         >
           Register Now
@@ -426,9 +210,9 @@ export default function SignIn({ docTitle }: { docTitle: string }) {
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}
         >
-          Already have an account?
-          <Link to={toSignIn} className="ml-1 text-gray-900">
-            Sign in
+          don't have an account?
+          <Link to={toSignUp} className="ml-1 text-gray-900">
+            Sign Up
           </Link>
         </Typography>
       </form>

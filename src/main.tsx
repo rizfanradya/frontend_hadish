@@ -2,9 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { toSignUp, toUserDashboard } from "./utils/constant";
+import { toSignIn, toSignUp, toUserDashboard } from "./utils/constant";
 import UserDashboard from "./pages/user/dashboard";
 import { ThemeProvider } from "@material-tailwind/react";
+import SignUp from "./pages/auth/signup";
 import SignIn from "./pages/auth/signin";
 
 const router = createBrowserRouter([
@@ -14,7 +15,11 @@ const router = createBrowserRouter([
   },
   {
     path: toSignUp,
-    element: <SignIn docTitle="Hadish - Sign Up" />,
+    element: <SignUp docTitle="Hadish - Sign Up" />,
+  },
+  {
+    path: toSignIn,
+    element: <SignIn docTitle="Hadish - Sign In" />,
   },
 ]);
 
