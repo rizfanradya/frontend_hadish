@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
-import Layout from "../components/layout";
+import Layout from "../../components/layout";
+import { toManageDashboard } from "../../utils/constant";
 
 export default function ManageDashboard({ docTitle }: { docTitle: string }) {
   useEffect(() => {
@@ -10,7 +11,7 @@ export default function ManageDashboard({ docTitle }: { docTitle: string }) {
   }, []);
 
   return (
-    <Layout>
+    <Layout isActive={toManageDashboard}>
       <div></div>
     </Layout>
   );
