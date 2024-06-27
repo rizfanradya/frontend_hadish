@@ -4,6 +4,8 @@ import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import {
   ACCESS_TOKEN_NAME,
+  toAdminTableUser,
+  toManageDashboard,
   toSignIn,
   toSignUp,
   toUserDashboard,
@@ -14,19 +16,30 @@ import SignUp from "./pages/auth/signup";
 import SignIn from "./pages/auth/signin";
 import createStore from "react-auth-kit/createStore";
 import AuthProvider from "react-auth-kit/AuthProvider";
+import AdminTableUser from "./pages/admin/user";
+import ManageDashboard from "./pages/manageDashboard";
 
+const documentTitle = "Fake Hadish -";
 const router = createBrowserRouter([
   {
     path: toUserDashboard,
-    element: <UserDashboard docTitle="Fake Hadish - Home" />,
+    element: <UserDashboard docTitle={`${documentTitle} Home`} />,
   },
   {
     path: toSignUp,
-    element: <SignUp docTitle="Fake Hadish - Sign Up" />,
+    element: <SignUp docTitle={`${documentTitle} Sign Up`} />,
   },
   {
     path: toSignIn,
-    element: <SignIn docTitle="Fake Hadish - Sign In" />,
+    element: <SignIn docTitle={`${documentTitle} Sign In`} />,
+  },
+  {
+    path: toManageDashboard,
+    element: <ManageDashboard docTitle={`${documentTitle} Manage Dashboard`} />,
+  },
+  {
+    path: toAdminTableUser,
+    element: <AdminTableUser docTitle={`${documentTitle} Admin Table User`} />,
   },
 ]);
 

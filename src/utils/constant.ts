@@ -7,3 +7,5 @@ export const AUTHORIZATION = `Bearer ${ACCESS_TOKEN}`;
 export const toSignUp = "/signup";
 export const toSignIn = "/signin";
 export const toUserDashboard = "/";
+export const toManageDashboard = "/manage-dashboard";
+export const toAdminTableUser = "/manage-dashboard/admin/table-user";

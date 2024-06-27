@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 import { FaSearch } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import { HiBars3 } from "react-icons/hi2";
-import { toSignIn, toSignUp } from "../../../utils/constant";
+import { toManageDashboard, toSignIn, toSignUp } from "../../../utils/constant";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import useSignOut from "react-auth-kit/hooks/useSignOut";
@@ -104,7 +104,7 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
               >
                 <Typography
                   as="a"
-                  href="#"
+                  href={toManageDashboard}
                   variant="small"
                   color="white"
                   className="font-medium"
@@ -118,26 +118,7 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
                     onPointerEnterCapture={undefined}
                     onPointerLeaveCapture={undefined}
                   >
-                    Home
-                  </ListItem>
-                </Typography>
-                <Typography
-                  as="a"
-                  href="#"
-                  variant="small"
-                  color="white"
-                  className="font-medium"
-                  placeholder={undefined}
-                  onPointerEnterCapture={undefined}
-                  onPointerLeaveCapture={undefined}
-                >
-                  <ListItem
-                    className="flex items-center gap-2 py-2 pr-4"
-                    placeholder={undefined}
-                    onPointerEnterCapture={undefined}
-                    onPointerLeaveCapture={undefined}
-                  >
-                    Table
+                    Dashboard
                   </ListItem>
                 </Typography>
               </List>
@@ -240,7 +221,7 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
             >
               <Typography
                 as="a"
-                href="#"
+                href={toManageDashboard}
                 variant="small"
                 color="white"
                 className="font-medium"
@@ -254,26 +235,7 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
                   onPointerEnterCapture={undefined}
                   onPointerLeaveCapture={undefined}
                 >
-                  Home
-                </ListItem>
-              </Typography>
-              <Typography
-                as="a"
-                href="#"
-                variant="small"
-                color="white"
-                className="font-medium"
-                placeholder={undefined}
-                onPointerEnterCapture={undefined}
-                onPointerLeaveCapture={undefined}
-              >
-                <ListItem
-                  className="flex items-center gap-2 py-2 pr-4"
-                  placeholder={undefined}
-                  onPointerEnterCapture={undefined}
-                  onPointerLeaveCapture={undefined}
-                >
-                  Table
+                  Dashboard
                 </ListItem>
               </Typography>
             </List>
