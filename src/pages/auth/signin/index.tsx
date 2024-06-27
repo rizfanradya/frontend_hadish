@@ -67,7 +67,6 @@ export default function SignIn({ docTitle }: { docTitle: string }) {
         });
       }
     } catch (error) {
-      console.log(error);
       Swal.fire({
         icon: "warning",
         title: "Incorrect",
