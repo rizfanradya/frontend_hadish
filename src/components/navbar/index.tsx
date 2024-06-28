@@ -8,7 +8,6 @@ import {
   MenuHandler,
   MenuList,
   MenuItem,
-  Breadcrumbs,
 } from "@material-tailwind/react";
 import { useState } from "react";
 import useSignOut from "react-auth-kit/hooks/useSignOut";
@@ -16,10 +15,15 @@ import { HiOutlineChevronDown } from "react-icons/hi";
 import { HiMiniPower } from "react-icons/hi2";
 import { FaUserCircle } from "react-icons/fa";
 import { FiMenu } from "react-icons/fi";
-import { TiHome } from "react-icons/ti";
 import { toUserDashboard } from "../../utils/constant";
 
-export default function NavbarDefault({ openDrawer }: { openDrawer: any }) {
+export default function NavbarDefault({
+  openDrawer,
+  title,
+}: {
+  openDrawer: any;
+  title: string;
+}) {
   const signOut = useSignOut();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -31,27 +35,14 @@ export default function NavbarDefault({ openDrawer }: { openDrawer: any }) {
       onPointerLeaveCapture={undefined}
     >
       <div className="container flex items-center justify-between mx-auto text-blue-gray-900">
-        <div>
-          <Breadcrumbs
-            placeholder={undefined}
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
-            className="pb-0 text-sm bg-transparent"
-          >
-            <TiHome opacity="60" size={18} />
-            <span className="opacity-60">Admin</span>
-            <span>Home</span>
-          </Breadcrumbs>
-
-          <Typography
-            placeholder={undefined}
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
-            className="px-4 font-bold"
-          >
-            Home
-          </Typography>
-        </div>
+        <Typography
+          placeholder={undefined}
+          onPointerEnterCapture={undefined}
+          onPointerLeaveCapture={undefined}
+          className="px-4 font-bold"
+        >
+          {title}
+        </Typography>
 
         <div className="flex items-center gap-2">
           <IconButton

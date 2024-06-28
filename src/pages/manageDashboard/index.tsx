@@ -23,11 +23,12 @@ export default function ManageDashboard({ docTitle }: { docTitle: string }) {
     <Layout
       isActive={toManageDashboard}
       className="flex flex-wrap gap-2 justify-evenly"
+      title="Dashboard"
     >
       {linkItems(34, "black").map((doc) => (
         <Card
           key={doc.href}
-          className="mt-6 max-w-96"
+          className="max-w-96"
           placeholder={undefined}
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}

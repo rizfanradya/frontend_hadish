@@ -8,7 +8,11 @@ import { FaBook, FaBookmark, FaUsers } from "react-icons/fa6";
 import { HiPresentationChartBar } from "react-icons/hi2";
 import { LiaUsersCogSolid } from "react-icons/lia";
 import DrawerDefault from "../drawer";
-import { toManageDashboard, toUserDashboard } from "../../utils/constant";
+import {
+  toAdminTableUser,
+  toManageDashboard,
+  toUserDashboard,
+} from "../../utils/constant";
 
 export function linkItems(
   sizeIcon: number = 20,
@@ -25,7 +29,7 @@ export function linkItems(
     },
     {
       name: "User",
-      href: "",
+      href: toAdminTableUser,
       icon: <FaUsers size={sizeIcon} color={color} />,
       role: ["ADMIN", "SUPER ADMINISTRATOR"],
       description:
@@ -61,11 +65,13 @@ export function linkItems(
 export default function Layout({
   children,
   isActive,
-  className,
+  className = "",
+  title,
 }: {
   children: ReactNode;
   isActive: string;
-  className: string;
+  className?: string;
+  title: string;
 }) {
   const authHeader = useAuthHeader();
   const authUser = useAuthUser();
@@ -88,8 +94,8 @@ export default function Layout({
 
         <div className="justify-end w-full lg:flex">
           <div className="lg:w-[69%] xl:w-[73%] 2xl:w-[77%]">
-            <NavbarDefault openDrawer={openDrawer} />
-            <div className={`${className} mt-20`}>{children}</div>
+            <NavbarDefault title={title} openDrawer={openDrawer} />
+            <div className={`${className} mt-28`}>{children}</div>
           </div>
         </div>
       </div>

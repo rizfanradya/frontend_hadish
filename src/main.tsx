@@ -6,14 +6,10 @@ import {
   ACCESS_TOKEN_NAME,
   toAdminTableUser,
   toManageDashboard,
-  toSignIn,
-  toSignUp,
   toUserDashboard,
 } from "./utils/constant";
 import UserDashboard from "./pages/user/dashboard";
 import { ThemeProvider } from "@material-tailwind/react";
-import SignUp from "./pages/auth/signup";
-import SignIn from "./pages/auth/signin";
 import createStore from "react-auth-kit/createStore";
 import AuthProvider from "react-auth-kit/AuthProvider";
 import AdminTableUser from "./pages/admin/user";
@@ -24,14 +20,6 @@ const router = createBrowserRouter([
   {
     path: toUserDashboard,
     element: <UserDashboard docTitle={`${documentTitle} Home`} />,
-  },
-  {
-    path: toSignUp,
-    element: <SignUp docTitle={`${documentTitle} Sign Up`} />,
-  },
-  {
-    path: toSignIn,
-    element: <SignIn docTitle={`${documentTitle} Sign In`} />,
   },
   {
     path: toManageDashboard,
