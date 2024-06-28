@@ -14,13 +14,13 @@ import { Link } from "react-router-dom";
 export default function DrawerDefault({
   open,
   closeDrawer,
-  sideBarLink,
+  linkItems,
   isActive,
 }: {
   closeDrawer: any;
   open: any;
   isActive: string;
-  sideBarLink: {
+  linkItems: {
     name: string;
     href: string;
     icon: ReactNode;
@@ -64,7 +64,7 @@ export default function DrawerDefault({
         onPointerEnterCapture={undefined}
         onPointerLeaveCapture={undefined}
       >
-        {sideBarLink.map((doc) => (
+        {linkItems.map((doc) => (
           <Link to={doc.href} key={doc.href}>
             <ListItem
               placeholder={undefined}

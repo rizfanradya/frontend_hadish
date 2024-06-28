@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { ReactNode, useState } from "react";
 import NavbarDefault from "../navbar";
 import Sidebar from "../sidebar";
@@ -9,12 +10,12 @@ import { LiaUsersCogSolid } from "react-icons/lia";
 import DrawerDefault from "../drawer";
 import { toManageDashboard, toUserDashboard } from "../../utils/constant";
 
-const sideBarLink = [
+export const linkItems = [
   {
     name: "Dashboard",
     href: toManageDashboard,
     icon: <HiPresentationChartBar size={20} />,
-    role: ["ADMIN", "SUPER ADMINISTRATOR"],
+    role: ["ADMIN", "SUPER ADMINISTRATOR", "EXPERT"],
   },
   {
     name: "User",
@@ -26,7 +27,7 @@ const sideBarLink = [
     name: "Hadish",
     href: toManageDashboard,
     icon: <FaBook size={20} />,
-    role: ["ADMIN", "SUPER ADMINISTRATOR"],
+    role: ["ADMIN", "SUPER ADMINISTRATOR", "EXPERT"],
   },
   {
     name: "Type Hadish",
@@ -45,9 +46,11 @@ const sideBarLink = [
 export default function Layout({
   children,
   isActive,
+  className,
 }: {
   children: ReactNode;
   isActive: string;
+  className: string;
 }) {
   const authHeader = useAuthHeader();
   const authUser = useAuthUser();
@@ -60,18 +63,22 @@ export default function Layout({
   } else
     return (
       <div className="bg-blue-gray-50/50">
-        <div className="flex gap-4 px-2 py-4 md:px-4">
-          <Sidebar sideBarLink={sideBarLink} isActive={isActive} />
-          <NavbarDefault openDrawer={openDrawer} />
+        <div className="relative flex gap-4 px-2 py-4 md:px-4">
+          <Sidebar linkItems={linkItems} isActive={isActive} />
           <DrawerDefault
-            sideBarLink={sideBarLink}
+            linkItems={linkItems}
             open={open}
             closeDrawer={closeDrawer}
             isActive={isActive}
           />
-        </div>
 
-        <div>{children}</div>
+          <div className="justify-end w-full lg:flex">
+            <div className="lg:w-[69%] xl:w-[73%] 2xl:w-[77%]">
+              <NavbarDefault openDrawer={openDrawer} />
+              <div className={className}>{children}</div>
+            </div>
+          </div>
+        </div>
       </div>
     );
 }

@@ -10,11 +10,11 @@ import { Link } from "react-router-dom";
 import { toManageDashboard } from "../../utils/constant";
 
 export default function Sidebar({
-  sideBarLink,
+  linkItems,
   isActive,
 }: {
   isActive: string;
-  sideBarLink: {
+  linkItems: {
     name: string;
     href: string;
     icon: ReactNode;
@@ -23,7 +23,7 @@ export default function Sidebar({
 }) {
   return (
     <Card
-      className="h-[calc(100vh-2rem)] w-full max-w-72 border border-black/25 p-4 shadow-xl shadow-blue-gray-900/5 hidden lg:block"
+      className="h-[calc(100vh-2rem)] fixed z-10 w-full max-w-72 border border-black/25 p-4 shadow-xl shadow-blue-gray-900/5 hidden lg:block"
       placeholder={undefined}
       onPointerEnterCapture={undefined}
       onPointerLeaveCapture={undefined}
@@ -48,7 +48,7 @@ export default function Sidebar({
         onPointerEnterCapture={undefined}
         onPointerLeaveCapture={undefined}
       >
-        {sideBarLink.map((doc) => (
+        {linkItems.map((doc) => (
           <Link to={doc.href} key={doc.href}>
             <ListItem
               placeholder={undefined}
