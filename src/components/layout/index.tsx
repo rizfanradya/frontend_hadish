@@ -10,38 +10,53 @@ import { LiaUsersCogSolid } from "react-icons/lia";
 import DrawerDefault from "../drawer";
 import { toManageDashboard, toUserDashboard } from "../../utils/constant";
 
-export const linkItems = [
-  {
-    name: "Dashboard",
-    href: toManageDashboard,
-    icon: <HiPresentationChartBar size={20} />,
-    role: ["ADMIN", "SUPER ADMINISTRATOR", "EXPERT"],
-  },
-  {
-    name: "User",
-    href: toManageDashboard,
-    icon: <FaUsers size={20} />,
-    role: ["ADMIN", "SUPER ADMINISTRATOR"],
-  },
-  {
-    name: "Hadish",
-    href: toManageDashboard,
-    icon: <FaBook size={20} />,
-    role: ["ADMIN", "SUPER ADMINISTRATOR", "EXPERT"],
-  },
-  {
-    name: "Type Hadish",
-    href: toManageDashboard,
-    icon: <FaBookmark size={20} />,
-    role: ["ADMIN", "SUPER ADMINISTRATOR"],
-  },
-  {
-    name: "Role",
-    href: toManageDashboard,
-    icon: <LiaUsersCogSolid size={20} />,
-    role: ["ADMIN", "SUPER ADMINISTRATOR"],
-  },
-];
+export function linkItems(
+  sizeIcon: number = 20,
+  color: string | undefined = undefined
+) {
+  return [
+    {
+      name: "Dashboard",
+      href: toManageDashboard,
+      icon: <HiPresentationChartBar size={sizeIcon} color={color} />,
+      role: ["ADMIN", "SUPER ADMINISTRATOR", "EXPERT"],
+      description:
+        "Provides an overview of key metrics and summaries for quick insights.",
+    },
+    {
+      name: "User",
+      href: toManageDashboard,
+      icon: <FaUsers size={sizeIcon} color={color} />,
+      role: ["ADMIN", "SUPER ADMINISTRATOR"],
+      description:
+        "Allows administrators to manage user data and information comprehensively.",
+    },
+    {
+      name: "Hadish",
+      href: toManageDashboard,
+      icon: <FaBook size={sizeIcon} color={color} />,
+      role: ["ADMIN", "SUPER ADMINISTRATOR", "EXPERT"],
+      description:
+        "Enables content management and provides detailed information related to Hadish.",
+    },
+    {
+      name: "Type Hadish",
+      href: toManageDashboard,
+      icon: <FaBookmark size={sizeIcon} color={color} />,
+      role: ["ADMIN", "SUPER ADMINISTRATOR"],
+      description:
+        "Facilitates the management of categories and types within the Hadish content.",
+    },
+    {
+      name: "Role",
+      href: toManageDashboard,
+      icon: <LiaUsersCogSolid size={sizeIcon} color={color} />,
+      role: ["ADMIN", "SUPER ADMINISTRATOR"],
+      description:
+        "Handles the administration of user roles and permissions within the system.",
+    },
+  ];
+}
 
 export default function Layout({
   children,
@@ -64,9 +79,9 @@ export default function Layout({
     return (
       <div className="bg-blue-gray-50/50">
         <div className="relative flex gap-4 px-2 py-4 md:px-4">
-          <Sidebar linkItems={linkItems} isActive={isActive} />
+          <Sidebar linkItems={linkItems()} isActive={isActive} />
           <DrawerDefault
-            linkItems={linkItems}
+            linkItems={linkItems()}
             open={open}
             closeDrawer={closeDrawer}
             isActive={isActive}
@@ -75,7 +90,7 @@ export default function Layout({
           <div className="justify-end w-full lg:flex">
             <div className="lg:w-[69%] xl:w-[73%] 2xl:w-[77%]">
               <NavbarDefault openDrawer={openDrawer} />
-              <div className={className}>{children}</div>
+              <div className={`${className} mt-20`}>{children}</div>
             </div>
           </div>
         </div>

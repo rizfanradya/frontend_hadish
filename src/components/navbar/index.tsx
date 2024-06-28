@@ -25,7 +25,7 @@ export default function NavbarDefault({ openDrawer }: { openDrawer: any }) {
 
   return (
     <Navbar
-      className="max-w-screen-xl px-2 py-2 mx-auto lg:px-8 lg:py-4 h-min"
+      className="fixed z-10 top-4 max-w-screen-xl px-2 py-2 mx-auto lg:px-8 lg:py-4 h-min w-[calc(100vw-18px)] lg:w-[67%] xl:w-[71%] 2xl:w-[75%]"
       placeholder={undefined}
       onPointerEnterCapture={undefined}
       onPointerLeaveCapture={undefined}
