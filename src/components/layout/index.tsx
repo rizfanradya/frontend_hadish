@@ -25,7 +25,7 @@ export function linkItems(
     },
     {
       name: "User",
-      href: toManageDashboard,
+      href: "",
       icon: <FaUsers size={sizeIcon} color={color} />,
       role: ["ADMIN", "SUPER ADMINISTRATOR"],
       description:
@@ -33,7 +33,7 @@ export function linkItems(
     },
     {
       name: "Hadish",
-      href: toManageDashboard,
+      href: "",
       icon: <FaBook size={sizeIcon} color={color} />,
       role: ["ADMIN", "SUPER ADMINISTRATOR", "EXPERT"],
       description:
@@ -41,7 +41,7 @@ export function linkItems(
     },
     {
       name: "Type Hadish",
-      href: toManageDashboard,
+      href: "",
       icon: <FaBookmark size={sizeIcon} color={color} />,
       role: ["ADMIN", "SUPER ADMINISTRATOR"],
       description:
@@ -49,7 +49,7 @@ export function linkItems(
     },
     {
       name: "Role",
-      href: toManageDashboard,
+      href: "",
       icon: <LiaUsersCogSolid size={sizeIcon} color={color} />,
       role: ["ADMIN", "SUPER ADMINISTRATOR"],
       description:
@@ -77,21 +77,19 @@ export default function Layout({
     window.location.href = toUserDashboard;
   } else
     return (
-      <div className="bg-blue-gray-50/50">
-        <div className="relative flex gap-4 px-2 py-4 md:px-4">
-          <Sidebar linkItems={linkItems()} isActive={isActive} />
-          <DrawerDefault
-            linkItems={linkItems()}
-            open={open}
-            closeDrawer={closeDrawer}
-            isActive={isActive}
-          />
+      <div className="relative flex gap-4 px-2 py-4 md:px-4 bg-blue-gray-50/50">
+        <Sidebar linkItems={linkItems()} isActive={isActive} />
+        <DrawerDefault
+          linkItems={linkItems()}
+          open={open}
+          closeDrawer={closeDrawer}
+          isActive={isActive}
+        />
 
-          <div className="justify-end w-full lg:flex">
-            <div className="lg:w-[69%] xl:w-[73%] 2xl:w-[77%]">
-              <NavbarDefault openDrawer={openDrawer} />
-              <div className={`${className} mt-20`}>{children}</div>
-            </div>
+        <div className="justify-end w-full lg:flex">
+          <div className="lg:w-[69%] xl:w-[73%] 2xl:w-[77%]">
+            <NavbarDefault openDrawer={openDrawer} />
+            <div className={`${className} mt-20`}>{children}</div>
           </div>
         </div>
       </div>
