@@ -487,7 +487,7 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
         </div>
       </div>
 
-      {/* dialog popup modal sign up */}
+      {/* dialog popup modal sign in */}
       <Dialog
         size="md"
         open={openSignIn}

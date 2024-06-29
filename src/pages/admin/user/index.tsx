@@ -3,17 +3,23 @@
 import { useEffect, useState } from "react";
 import Layout from "../../../components/layout";
 import { toAdminTableUser } from "../../../utils/constant";
-import { Card, Chip } from "@material-tailwind/react";
+import { Card, Chip, Input } from "@material-tailwind/react";
 import DataTable from "react-data-table-component";
 import LoadingSpinner from "../../../components/loading";
 import { FaTrash } from "react-icons/fa6";
 import { DeleteData } from "../../../components/deleteData";
 import axiosInstance from "../../../utils/axiosInstance";
 import Swal from "sweetalert2";
+import FormUser from "./form";
+import { useForm } from "react-hook-form";
 
 export default function AdminTableUser({ docTitle }: { docTitle: string }) {
   const [hitApi, setHitApi] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
+  const [role, setRole] = useState([]);
+  const { register, watch } = useForm<{ search: string }>({
+    defaultValues: { search: "" },
+  });
   const [data, setData] = useState({
     total_data: 0,
     data: [],
@@ -24,6 +30,20 @@ export default function AdminTableUser({ docTitle }: { docTitle: string }) {
   useEffect(() => {
     (async () => {
       document.title = docTitle;
+      try {
+        setLoading(true);
+        const { data } = await axiosInstance.get(
+          `/role/?limit=999999&offset=0`
+        );
+        setRole(data.data);
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Server Error 404",
+          allowOutsideClick: false,
+        });
+      }
+      setLoading(false);
     })();
   }, []);
 
@@ -47,10 +67,32 @@ export default function AdminTableUser({ docTitle }: { docTitle: string }) {
     document.title = docTitle;
   }, [hitApi, data.limit, data.offset]);
 
+  useEffect(() => {
+    const timeoutId = setTimeout(async () => {
+      try {
+        setLoading(true);
+        const response = await axiosInstance.get(
+          `/user/?limit=${data.limit}&offset=${data.offset}&search=${watch(
+            "search"
+          )}`
+        );
+        setData(response.data);
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Server Error 404",
+          allowOutsideClick: false,
+        });
+      }
+      setLoading(false);
+    }, 1000);
+    return () => clearTimeout(timeoutId);
+  }, [watch("search")]);
+
   return (
     <Layout isActive={toAdminTableUser} title="User Table">
       <Card
-        className="w-full h-full overflow-scroll"
+        className="w-full h-full p-4 overflow-scroll"
         placeholder={undefined}
         onPointerEnterCapture={undefined}
         onPointerLeaveCapture={undefined}
@@ -79,17 +121,22 @@ export default function AdminTableUser({ docTitle }: { docTitle: string }) {
           subHeader
           subHeaderComponent={
             <div className="flex items-center justify-between w-full text-start">
-              {/* <FormBlockedDay
+              <FormUser
                 mode="add"
-                setHitApi={setHitApi}
-                hitApi={hitApi}
+                setGetData={setHitApi}
+                getData={hitApi}
+                roleData={role}
               />
-              <input
-                className="rounded input input-bordered input-sm"
-                value={filterInputText}
-                onChange={(e) => setFilterInputText(e.target.value)}
-                placeholder="search..."
-              /> */}
+              <div>
+                <Input
+                  onPointerEnterCapture={undefined}
+                  onPointerLeaveCapture={undefined}
+                  crossOrigin={undefined}
+                  value={watch("search")}
+                  {...register("search")}
+                  label="Search..."
+                />
+              </div>
             </div>
           }
           columns={[
@@ -101,7 +148,7 @@ export default function AdminTableUser({ docTitle }: { docTitle: string }) {
             },
             {
               name: "Username",
-              selector: (row: any) => row.username,
+              selector: (row) => row.username,
               sortable: true,
               wrap: true,
               width: "150px",
@@ -129,7 +176,7 @@ export default function AdminTableUser({ docTitle }: { docTitle: string }) {
             },
             {
               name: "Role",
-              selector: (row: any) => row.role,
+              selector: (row: any) => row.role_name,
               sortable: true,
               wrap: true,
             },
@@ -140,8 +187,8 @@ export default function AdminTableUser({ docTitle }: { docTitle: string }) {
               cell: (row: any) => (
                 <Chip
                   variant="gradient"
-                  color={row.status === "ACTIVE" ? "green" : "red"}
-                  value={row.status}
+                  color={row.status ? "green" : "red"}
+                  value={row.status_name}
                   className="py-0.5 px-2 text-[11px] font-medium w-fit"
                 />
               ),
@@ -153,9 +200,26 @@ export default function AdminTableUser({ docTitle }: { docTitle: string }) {
               wrap: true,
               width: "230px",
             },
+
             {
-              name: "Updated at",
+              name: "Updated At",
               selector: (row: any) => row.updated_at,
+              sortable: true,
+              wrap: true,
+              width: "230px",
+            },
+            {
+              name: "Created By",
+              selector: (row: any) =>
+                row.created_by ? row.created_by.username : "",
+              sortable: true,
+              wrap: true,
+              width: "230px",
+            },
+            {
+              name: "Updated By",
+              selector: (row: any) =>
+                row.updated_by ? row.updated_by.username : "",
               sortable: true,
               wrap: true,
               width: "230px",
@@ -163,13 +227,14 @@ export default function AdminTableUser({ docTitle }: { docTitle: string }) {
             {
               name: "Action",
               cell: (row: any) => (
-                <div className="flex items-center justify-center gap-3">
-                  {/* <FormBlockedDay
+                <div className="flex items-center justify-center gap-4">
+                  <FormUser
                     data={row}
                     mode="edit"
-                    setHitApi={setHitApi}
-                    hitApi={hitApi}
-                  /> */}
+                    setGetData={setHitApi}
+                    getData={hitApi}
+                    roleData={role}
+                  />
                   <div
                     className="text-red-500 cursor-pointer"
                     onClick={async () =>
