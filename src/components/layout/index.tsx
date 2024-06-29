@@ -95,7 +95,7 @@ export default function Layout({
         <div className="justify-end w-full lg:flex">
           <div className="lg:w-[69%] xl:w-[73%] 2xl:w-[77%]">
             <NavbarDefault title={title} openDrawer={openDrawer} />
-            <div className={`${className} mt-28`}>{children}</div>
+            <div className={`${className} mt-24`}>{children}</div>
           </div>
         </div>
       </div>
