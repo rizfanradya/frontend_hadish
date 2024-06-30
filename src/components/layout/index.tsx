@@ -13,6 +13,7 @@ import {
   toManageDashboard,
   toUserDashboard,
 } from "../../utils/constant";
+import { IoIosPaper } from "react-icons/io";
 
 export function linkItems(
   sizeIcon: number = 20,
@@ -58,6 +59,14 @@ export function linkItems(
       role: ["ADMIN", "SUPER ADMINISTRATOR"],
       description:
         "Handles the administration of user roles and permissions within the system.",
+    },
+    {
+      name: "Hadish Assessment",
+      href: "",
+      icon: <IoIosPaper size={sizeIcon} color={color} />,
+      role: ["EXPERT", "SUPER ADMINISTRATOR"],
+      description:
+        "Allows experts to evaluate and assess Hadish content for quality and relevance.",
     },
   ];
 }
