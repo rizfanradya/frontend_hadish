@@ -17,7 +17,7 @@ import AuthProvider from "react-auth-kit/AuthProvider";
 import AdminTableUser from "./pages/admin/user";
 import ManageDashboard from "./pages/manageDashboard";
 import AdminTableRole from "./pages/admin/role";
-import AdminTableTypeHadith from "./pages/admin/hadith";
+import AdminTableTypeHadith from "./pages/admin/typeHadith";
 
 const documentTitle = "Fake Hadish -";
 const router = createBrowserRouter([

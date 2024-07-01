@@ -27,26 +27,7 @@ export default function AdminTableRole({ docTitle }: { docTitle: string }) {
   });
 
   useEffect(() => {
-    (async () => {
-      try {
-        setLoading(true);
-        const response = await axiosInstance.get(
-          `/role/?limit=${data.limit}&offset=${data.offset}`
-        );
-        setData(response.data);
-      } catch (error) {
-        Swal.fire({
-          icon: "error",
-          title: "Server Error 404",
-          allowOutsideClick: false,
-        });
-      }
-      setLoading(false);
-    })();
     document.title = docTitle;
-  }, [hitApi, data.limit, data.offset]);
-
-  useEffect(() => {
     const timeoutId = setTimeout(async () => {
       try {
         setLoading(true);
@@ -66,7 +47,7 @@ export default function AdminTableRole({ docTitle }: { docTitle: string }) {
       setLoading(false);
     }, 1000);
     return () => clearTimeout(timeoutId);
-  }, [watch("search")]);
+  }, [watch("search"), hitApi, data.limit, data.offset]);
 
   return (
     <Layout isActive={toAdminTableRole} title="Role Table">

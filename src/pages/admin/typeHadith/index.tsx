@@ -31,26 +31,7 @@ export default function AdminTableTypeHadith({
   });
 
   useEffect(() => {
-    (async () => {
-      try {
-        setLoading(true);
-        const response = await axiosInstance.get(
-          `/type_hadith/?limit=${data.limit}&offset=${data.offset}`
-        );
-        setData(response.data);
-      } catch (error) {
-        Swal.fire({
-          icon: "error",
-          title: "Server Error 404",
-          allowOutsideClick: false,
-        });
-      }
-      setLoading(false);
-    })();
     document.title = docTitle;
-  }, [hitApi, data.limit, data.offset]);
-
-  useEffect(() => {
     const timeoutId = setTimeout(async () => {
       try {
         setLoading(true);
@@ -70,7 +51,7 @@ export default function AdminTableTypeHadith({
       setLoading(false);
     }, 1000);
     return () => clearTimeout(timeoutId);
-  }, [watch("search")]);
+  }, [watch("search"), hitApi, data.limit, data.offset]);
 
   return (
     <Layout isActive={toAdminTableTypeHadith} title="Type Hadish Table">
