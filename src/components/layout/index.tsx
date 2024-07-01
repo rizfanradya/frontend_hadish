@@ -10,6 +10,7 @@ import { HiPresentationChartBar } from "react-icons/hi2";
 import { LiaUsersCogSolid } from "react-icons/lia";
 import DrawerDefault from "../drawer";
 import {
+  toAdminTableRole,
   toAdminTableUser,
   toManageDashboard,
   toUserDashboard,
@@ -57,7 +58,7 @@ export function linkItems(
     },
     {
       name: "Role",
-      href: "",
+      href: toAdminTableRole,
       icon: <LiaUsersCogSolid size={sizeIcon} color={color} />,
       role: ["ADMIN", "SUPER ADMINISTRATOR"],
       description:

@@ -133,10 +133,13 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
 
   async function onSignUp() {
     if (usernameStatus === "taken") {
+      handleOpenSignUp();
       Swal.fire({
         icon: "error",
         title: "Username Taken",
         text: "The username is already taken. Please choose another one.",
+      }).then(() => {
+        handleOpenSignUp();
       });
       return;
     }
@@ -154,11 +157,14 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
       });
       window.location.reload();
     } catch (error) {
+      handleOpenSignUp();
       Swal.fire({
         icon: "error",
         title: "Username Taken",
         text: "The username is already taken. Please choose another one.",
         allowOutsideClick: false,
+      }).then(() => {
+        handleOpenSignUp();
       });
     }
     setLoading(false);
@@ -192,19 +198,25 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
       if (signInSuccess) {
         window.location.reload();
       } else {
+        handleOpenSignIn();
         Swal.fire({
           icon: "warning",
           title: "Incorrect",
           text: "Email or Password is incorrect",
           allowOutsideClick: false,
+        }).then(() => {
+          handleOpenSignIn();
         });
       }
     } catch (error) {
+      handleOpenSignIn();
       Swal.fire({
         icon: "warning",
         title: "Incorrect",
         text: "Email or Password is incorrect",
         allowOutsideClick: false,
+      }).then(() => {
+        handleOpenSignIn();
       });
     }
     setLoading(false);
