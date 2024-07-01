@@ -64,7 +64,6 @@ export default function AdminTableUser({ docTitle }: { docTitle: string }) {
       }
       setLoading(false);
     })();
-    document.title = docTitle;
   }, [hitApi, data.limit, data.offset]);
 
   useEffect(() => {
