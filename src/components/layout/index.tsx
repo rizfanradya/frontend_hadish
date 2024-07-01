@@ -11,6 +11,7 @@ import { LiaUsersCogSolid } from "react-icons/lia";
 import DrawerDefault from "../drawer";
 import {
   toAdminTableRole,
+  toAdminTableTypeHadith,
   toAdminTableUser,
   toManageDashboard,
   toUserDashboard,
@@ -50,7 +51,7 @@ export function linkItems(
     },
     {
       name: "Type Hadish",
-      href: "",
+      href: toAdminTableTypeHadith,
       icon: <FaBookmark size={sizeIcon} color={color} />,
       role: ["ADMIN", "SUPER ADMINISTRATOR"],
       description:

@@ -12,3 +12,5 @@ export const toUserDashboard = "/";
 export const toManageDashboard = "/manage-dashboard";
 export const toAdminTableUser = "/manage-dashboard/admin/table-user";
 export const toAdminTableRole = "/manage-dashboard/admin/table-role";
+export const toAdminTableTypeHadith =
+  "/manage-dashboard/admin/table-type-hadith";
