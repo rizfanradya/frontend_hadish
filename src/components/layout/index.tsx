@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-refresh/only-export-components */
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import NavbarDefault from "../navbar";
 import Sidebar from "../sidebar";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
@@ -14,6 +15,8 @@ import {
   toUserDashboard,
 } from "../../utils/constant";
 import { IoIosPaper } from "react-icons/io";
+import { jwtDecode } from "jwt-decode";
+import useSignOut from "react-auth-kit/hooks/useSignOut";
 
 export function linkItems(
   sizeIcon: number = 20,
@@ -84,9 +87,25 @@ export default function Layout({
 }) {
   const authHeader = useAuthHeader();
   const authUser = useAuthUser();
+  const signOut = useSignOut();
   const [open, setOpen] = useState(false);
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
+
+  useEffect(() => {
+    if (authHeader && authUser) {
+      const decodedToken = jwtDecode(authHeader);
+      if (decodedToken.exp) {
+        const currentTime = Math.floor(Date.now() / 1000);
+        const timeToExpire = decodedToken.exp - currentTime;
+        const timeoutId = setTimeout(() => {
+          signOut();
+          window.location.href = toUserDashboard;
+        }, timeToExpire * 1000);
+        return () => clearTimeout(timeoutId);
+      }
+    }
+  }, []);
 
   if (!authHeader && !authUser) {
     window.location.href = toUserDashboard;
