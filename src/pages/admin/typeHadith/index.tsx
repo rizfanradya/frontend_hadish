@@ -133,16 +133,14 @@ export default function AdminTableTypeHadith({
             },
             {
               name: "Created By",
-              selector: (row: any) =>
-                row.created_by ? row.created_by.username : "",
+              selector: (row: any) => row.created_by,
               sortable: true,
               wrap: true,
               width: "230px",
             },
             {
               name: "Updated By",
-              selector: (row: any) =>
-                row.updated_by ? row.updated_by.username : "",
+              selector: (row: any) => row.updated_by,
               sortable: true,
               wrap: true,
               width: "230px",

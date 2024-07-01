@@ -177,7 +177,7 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
       const response = await axiosInstance.post(
         `/token`,
         {
-          username: watch("email"),
+          username: watch("username"),
           password: watch("password"),
         },
         { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
@@ -202,7 +202,7 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
         Swal.fire({
           icon: "warning",
           title: "Incorrect",
-          text: "Email or Password is incorrect",
+          text: "Username or Password is incorrect",
           allowOutsideClick: false,
         }).then(() => {
           handleOpenSignIn();
@@ -213,7 +213,7 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
       Swal.fire({
         icon: "warning",
         title: "Incorrect",
-        text: "Email or Password is incorrect",
+        text: "Username or Password is incorrect",
         allowOutsideClick: false,
       }).then(() => {
         handleOpenSignIn();
@@ -538,7 +538,7 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
                 onPointerEnterCapture={undefined}
                 onPointerLeaveCapture={undefined}
               >
-                Enter your Email and Password to Sign In.
+                Enter your Username and Password to Sign In.
               </Typography>
             </div>
 
@@ -552,43 +552,27 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
                   onPointerEnterCapture={undefined}
                   onPointerLeaveCapture={undefined}
                 >
-                  Email
+                  Username
                 </Typography>
-                <div>
-                  <Input
-                    {...register("email")}
-                    size="lg"
-                    type="email"
-                    error={!isEmail(watch("email") ?? "")}
-                    success={isEmail(watch("email") ?? "")}
-                    labelProps={{
-                      className: "before:content-none",
-                    }}
-                    onPointerEnterCapture={undefined}
-                    onPointerLeaveCapture={undefined}
-                    crossOrigin={undefined}
-                    icon={
-                      isEmail(watch("email") ?? "") ? (
-                        <FaRegCheckCircle size={20} color="green" />
-                      ) : (
-                        <ImCross size={16} color="red" />
-                      )
-                    }
-                  />
-                  {!isEmail(watch("email") ?? "") && (
-                    <Typography
-                      variant="small"
-                      color="red"
-                      className="flex items-center gap-1 mt-2 font-normal"
-                      placeholder={undefined}
-                      onPointerEnterCapture={undefined}
-                      onPointerLeaveCapture={undefined}
-                    >
-                      <FaInfoCircle size={14} />
-                      Email Invalid
-                    </Typography>
-                  )}
-                </div>
+                <Input
+                  {...register("username")}
+                  size="lg"
+                  error={!watch("username") ? true : false}
+                  success={watch("username") ? true : false}
+                  labelProps={{
+                    className: "before:content-none",
+                  }}
+                  onPointerEnterCapture={undefined}
+                  onPointerLeaveCapture={undefined}
+                  crossOrigin={undefined}
+                  icon={
+                    watch("username") ? (
+                      <FaRegCheckCircle size={20} color="green" />
+                    ) : (
+                      <ImCross size={16} color="red" />
+                    )
+                  }
+                />
               </div>
 
               <div className="flex flex-col gap-4">
@@ -666,7 +650,7 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
                 onClick={() => onSignIn()}
                 loading={loading}
                 disabled={
-                  !isEmail(watch("email") ?? "") ||
+                  !watch("username") ||
                   !isStrongPassword(watch("password") ?? "")
                 }
               >

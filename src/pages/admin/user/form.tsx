@@ -93,6 +93,7 @@ export default function FormUser({
           last_name: watch("last_name"),
           password: watch("password"),
           confirm_password: watch("confirm_password"),
+          role: watch("role"),
         });
       } else {
         await axiosInstance.put(`/user/${data?.id}`, {
