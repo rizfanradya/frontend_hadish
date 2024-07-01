@@ -4,6 +4,7 @@ import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import {
   ACCESS_TOKEN_NAME,
+  toAdminTableHadith,
   toAdminTableRole,
   toAdminTableTypeHadith,
   toAdminTableUser,
@@ -18,6 +19,7 @@ import AdminTableUser from "./pages/admin/user";
 import ManageDashboard from "./pages/manageDashboard";
 import AdminTableRole from "./pages/admin/role";
 import AdminTableTypeHadith from "./pages/admin/typeHadith";
+import AdminTableHadith from "./pages/admin/hadith";
 
 const documentTitle = "Fake Hadish -";
 const router = createBrowserRouter([
@@ -32,6 +34,12 @@ const router = createBrowserRouter([
   {
     path: toAdminTableUser,
     element: <AdminTableUser docTitle={`${documentTitle} Admin Table User`} />,
+  },
+  {
+    path: toAdminTableHadith,
+    element: (
+      <AdminTableHadith docTitle={`${documentTitle} Admin Table Hadish`} />
+    ),
   },
   {
     path: toAdminTableTypeHadith,

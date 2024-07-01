@@ -10,6 +10,7 @@ import { HiPresentationChartBar } from "react-icons/hi2";
 import { LiaUsersCogSolid } from "react-icons/lia";
 import DrawerDefault from "../drawer";
 import {
+  toAdminTableHadith,
   toAdminTableRole,
   toAdminTableTypeHadith,
   toAdminTableUser,
@@ -43,7 +44,7 @@ export function linkItems(
     },
     {
       name: "Hadish",
-      href: "",
+      href: toAdminTableHadith,
       icon: <FaBook size={sizeIcon} color={color} />,
       role: ["ADMIN", "SUPER ADMINISTRATOR", "EXPERT"],
       description:
