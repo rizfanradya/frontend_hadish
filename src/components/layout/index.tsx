@@ -65,6 +65,14 @@ export function linkItems(
         "Enables content management and provides detailed information related to Hadish.",
     },
     {
+      name: "Hadish Assessment",
+      href: toExpertTableHadithAssesment,
+      icon: <IoIosPaper size={sizeIcon} color={color} />,
+      role: ["EXPERT", "SUPER ADMINISTRATOR"],
+      description:
+        "Allows experts to evaluate and assess Hadish content for quality and relevance.",
+    },
+    {
       name: "Type Hadish",
       href: toAdminTableTypeHadith,
       icon: <FaBookmark size={sizeIcon} color={color} />,
@@ -79,14 +87,6 @@ export function linkItems(
       role: ["ADMIN", "SUPER ADMINISTRATOR"],
       description:
         "Handles the administration of user roles and permissions within the system.",
-    },
-    {
-      name: "Hadish Assessment",
-      href: toExpertTableHadithAssesment,
-      icon: <IoIosPaper size={sizeIcon} color={color} />,
-      role: ["EXPERT", "SUPER ADMINISTRATOR"],
-      description:
-        "Allows experts to evaluate and assess Hadish content for quality and relevance.",
     },
   ];
 }
