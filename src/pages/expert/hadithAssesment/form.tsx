@@ -36,7 +36,7 @@ export default function FormHadithAssesment({
         try {
           setLoading(true);
           await axiosInstance.put(`/hadith/${data?.id}`, {
-            created_by: DECODE_TOKEN?.id,
+            created_by: data?.created_by,
             updated_by: DECODE_TOKEN?.id,
             type_hadith: watch("type_hadith"),
             hadith: data?.hadith,

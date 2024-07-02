@@ -49,7 +49,7 @@ export default function FormTypeHadith({
         });
       } else {
         await axiosInstance.put(`/type_hadith/${data?.id}`, {
-          created_by: DECODE_TOKEN?.id,
+          created_by: data?.created_by,
           updated_by: DECODE_TOKEN?.id,
           type: watch("type"),
         });

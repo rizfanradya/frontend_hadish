@@ -97,7 +97,7 @@ export default function FormUser({
         });
       } else {
         await axiosInstance.put(`/user/${data?.id}`, {
-          created_by: DECODE_TOKEN?.id,
+          created_by: data?.created_by,
           updated_by: DECODE_TOKEN?.id,
           email: watch("email"),
           first_name: watch("first_name"),

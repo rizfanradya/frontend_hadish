@@ -73,7 +73,7 @@ export default function FormRole({
         });
       } else {
         await axiosInstance.put(`/role/${data?.id}`, {
-          created_by: DECODE_TOKEN?.id,
+          created_by: data?.created_by,
           updated_by: DECODE_TOKEN?.id,
           role: watch("role"),
         });
