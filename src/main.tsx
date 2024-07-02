@@ -8,6 +8,7 @@ import {
   toAdminTableRole,
   toAdminTableTypeHadith,
   toAdminTableUser,
+  toExpertTableHadithAssesment,
   toManageDashboard,
   toUserDashboard,
 } from "./utils/constant";
@@ -20,6 +21,7 @@ import ManageDashboard from "./pages/manageDashboard";
 import AdminTableRole from "./pages/admin/role";
 import AdminTableTypeHadith from "./pages/admin/typeHadith";
 import AdminTableHadith from "./pages/admin/hadith";
+import ExpertTableHadithAssesment from "./pages/expert/hadithAssesment";
 
 const documentTitle = "Fake Hadish -";
 const router = createBrowserRouter([
@@ -52,6 +54,14 @@ const router = createBrowserRouter([
   {
     path: toAdminTableRole,
     element: <AdminTableRole docTitle={`${documentTitle} Admin Table Role`} />,
+  },
+  {
+    path: toExpertTableHadithAssesment,
+    element: (
+      <ExpertTableHadithAssesment
+        docTitle={`${documentTitle} Expert Table Hadish Assesment`}
+      />
+    ),
   },
 ]);
 

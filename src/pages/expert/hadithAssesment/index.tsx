@@ -8,14 +8,17 @@ import Swal from "sweetalert2";
 import { Card, Input } from "@material-tailwind/react";
 import DataTable from "react-data-table-component";
 import LoadingSpinner from "../../../components/loading";
-import { DeleteData } from "../../../components/deleteData";
-import { FaTrash } from "react-icons/fa6";
-import { toAdminTableHadith } from "../../../utils/constant";
-import FormHadith from "./form";
+import { toExpertTableHadithAssesment } from "../../../utils/constant";
+import FormHadithAssesment from "./form";
 
-export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
+export default function ExpertTableHadithAssesment({
+  docTitle,
+}: {
+  docTitle: string;
+}) {
   const [hitApi, setHitApi] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
+  const [typeHadith, setTypeHadith] = useState([]);
   const { register, watch } = useForm<{ search: string }>({
     defaultValues: { search: "" },
   });
@@ -25,6 +28,25 @@ export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
     limit: 10,
     offset: 0,
   });
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setLoading(true);
+        const { data } = await axiosInstance.get(
+          `/type_hadith/?limit=999999&offset=0`
+        );
+        setTypeHadith(data.data);
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Server Error 404",
+          allowOutsideClick: false,
+        });
+      }
+      setLoading(false);
+    })();
+  }, []);
 
   useEffect(() => {
     document.title = docTitle;
@@ -50,7 +72,10 @@ export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
   }, [watch("search"), hitApi, data.limit, data.offset]);
 
   return (
-    <Layout isActive={toAdminTableHadith} title="Hadish Table">
+    <Layout
+      isActive={toExpertTableHadithAssesment}
+      title="Hadish Assesment Table"
+    >
       <Card
         className="w-full h-full p-4 overflow-scroll"
         placeholder={undefined}
@@ -81,7 +106,7 @@ export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
           subHeader
           subHeaderComponent={
             <div className="flex items-center justify-between w-full text-start">
-              <FormHadith mode="add" setGetData={setHitApi} getData={hitApi} />
+              <div></div>
               <div>
                 <Input
                   onPointerEnterCapture={undefined}
@@ -123,52 +148,15 @@ export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
               width: "250px",
             },
             {
-              name: "Created At",
-              selector: (row: any) => row.created_at,
-              sortable: true,
-              wrap: true,
-              width: "230px",
-            },
-
-            {
-              name: "Updated At",
-              selector: (row: any) => row.updated_at,
-              sortable: true,
-              wrap: true,
-              width: "230px",
-            },
-            {
-              name: "Created By",
-              selector: (row: any) => row.created_by,
-              sortable: true,
-              wrap: true,
-              width: "230px",
-            },
-            {
-              name: "Updated By",
-              selector: (row: any) => row.updated_by,
-              sortable: true,
-              wrap: true,
-              width: "230px",
-            },
-            {
               name: "Action",
               cell: (row: any) => (
                 <div className="flex items-center justify-center gap-4">
-                  <FormHadith
+                  <FormHadithAssesment
                     data={row}
-                    mode="edit"
                     setGetData={setHitApi}
                     getData={hitApi}
+                    typeHadithData={typeHadith}
                   />
-                  <div
-                    className="text-red-500 cursor-pointer"
-                    onClick={async () =>
-                      await DeleteData(`/hadith/${row.id}`, setHitApi, hitApi)
-                    }
-                  >
-                    <FaTrash size={20} />
-                  </div>
                 </div>
               ),
               width: "150px",

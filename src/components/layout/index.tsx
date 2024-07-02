@@ -14,6 +14,7 @@ import {
   toAdminTableRole,
   toAdminTableTypeHadith,
   toAdminTableUser,
+  toExpertTableHadithAssesment,
   toManageDashboard,
   toUserDashboard,
 } from "../../utils/constant";
@@ -68,7 +69,7 @@ export function linkItems(
     },
     {
       name: "Hadish Assessment",
-      href: "",
+      href: toExpertTableHadithAssesment,
       icon: <IoIosPaper size={sizeIcon} color={color} />,
       role: ["EXPERT", "SUPER ADMINISTRATOR"],
       description:

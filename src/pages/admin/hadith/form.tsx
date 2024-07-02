@@ -31,13 +31,11 @@ export default function FormHadith({
   mode,
   getData,
   setGetData,
-  typeHadithData,
 }: {
   data?: dataType;
   mode: string;
   getData: boolean;
   setGetData: Dispatch<SetStateAction<boolean>>;
-  typeHadithData: any[];
 }) {
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -50,7 +48,6 @@ export default function FormHadith({
         await axiosInstance.post(`/hadith/`, {
           created_by: DECODE_TOKEN?.id,
           updated_by: DECODE_TOKEN?.id,
-          type_hadith: watch("type_hadith"),
           hadith: watch("hadith"),
           explanation: watch("explanation"),
         });
@@ -58,7 +55,7 @@ export default function FormHadith({
         await axiosInstance.put(`/hadith/${data?.id}`, {
           created_by: DECODE_TOKEN?.id,
           updated_by: DECODE_TOKEN?.id,
-          type_hadith: watch("type_hadith"),
+          type_hadith: data?.type_hadith,
           hadith: watch("hadith"),
           explanation: watch("explanation"),
         });
@@ -66,6 +63,7 @@ export default function FormHadith({
       handleRefreshData();
       handleOpen();
     } catch (error) {
+      handleOpen();
       Swal.fire({
         icon: "error",
         title: "Server Error 404",
@@ -151,27 +149,6 @@ export default function FormHadith({
               onPointerEnterCapture={undefined}
               onPointerLeaveCapture={undefined}
             >
-              Type Hadish
-            </Typography>
-            <select
-              {...register("type_hadith")}
-              className="bg-gray-50 border cursor-pointer border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
-              {typeHadithData.map((doc) => (
-                <option value={doc.id} key={doc.id}>
-                  {doc.type}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <Typography
-              variant="h6"
-              placeholder={undefined}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-            >
               Explanation
             </Typography>
             <Textarea
@@ -209,9 +186,7 @@ export default function FormHadith({
             placeholder={undefined}
             onPointerEnterCapture={undefined}
             onPointerLeaveCapture={undefined}
-            disabled={
-              !watch("hadith") || !watch("explanation") || !watch("type_hadith")
-            }
+            disabled={!watch("hadith") || !watch("explanation")}
           >
             Save
           </Button>

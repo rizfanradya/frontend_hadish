@@ -15,3 +15,5 @@ export const toAdminTableHadith = "/manage-dashboard/admin/table-hadish";
 export const toAdminTableRole = "/manage-dashboard/admin/table-role";
 export const toAdminTableTypeHadith =
   "/manage-dashboard/admin/table-type-hadith";
+export const toExpertTableHadithAssesment =
+  "/manage-dashboard/expert/table-hadish-assesment";
