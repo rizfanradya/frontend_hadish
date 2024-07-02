@@ -2,7 +2,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import Layout from "../../../components/layout";
-import { toAdminTableUser } from "../../../utils/constant";
+import {
+  DECODE_TOKEN,
+  roleAdmin,
+  roleSuperAdministrator,
+  toAdminTableUser,
+  toUserDashboard,
+} from "../../../utils/constant";
 import { Card, Chip, Input } from "@material-tailwind/react";
 import DataTable from "react-data-table-component";
 import LoadingSpinner from "../../../components/loading";
@@ -14,7 +20,9 @@ import FormUser from "./form";
 import { useForm } from "react-hook-form";
 
 export default function AdminTableUser({ docTitle }: { docTitle: string }) {
+  const [userInfo, setUserInfo] = useState({ role_name: "" });
   const [hitApi, setHitApi] = useState<boolean>(false);
+  const [initialLoading, setInitialLoading] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(true);
   const [role, setRole] = useState([]);
   const { register, watch } = useForm<{ search: string }>({
@@ -31,16 +39,20 @@ export default function AdminTableUser({ docTitle }: { docTitle: string }) {
     (async () => {
       document.title = docTitle;
       try {
-        const { data } = await axiosInstance.get(
+        const roleData = await axiosInstance.get(
           `/role/?limit=999999&offset=0`
         );
-        setRole(data.data);
+        const userData = await axiosInstance.get(`/user/${DECODE_TOKEN?.id}`);
+        setRole(roleData.data.data);
+        setUserInfo(userData.data);
       } catch (error) {
         Swal.fire({
           icon: "error",
           title: "Server Error 404",
           allowOutsideClick: false,
         });
+      } finally {
+        setInitialLoading(false);
       }
     })();
   }, []);
@@ -67,166 +79,177 @@ export default function AdminTableUser({ docTitle }: { docTitle: string }) {
     return () => clearTimeout(timeoutId);
   }, [watch("search"), hitApi, data.limit, data.offset]);
 
-  return (
-    <Layout isActive={toAdminTableUser} title="User Table">
-      <Card
-        className="w-full h-full p-4 overflow-scroll"
-        placeholder={undefined}
-        onPointerEnterCapture={undefined}
-        onPointerLeaveCapture={undefined}
-      >
-        <DataTable
-          data={data.data}
-          highlightOnHover={true}
-          progressPending={loading}
-          progressComponent={<LoadingSpinner fullScreen={false} />}
-          pagination
-          paginationServer={true}
-          paginationTotalRows={data.total_data}
-          paginationDefaultPage={1}
-          onChangeRowsPerPage={(e) =>
-            setData((prevUserData: any) => ({
-              ...prevUserData,
-              limit: e,
-            }))
-          }
-          onChangePage={(e) =>
-            setData((prevUserData: any) => ({
-              ...prevUserData,
-              offset: (e - 1) * data.limit,
-            }))
-          }
-          subHeader
-          subHeaderComponent={
-            <div className="flex items-center justify-between w-full text-start">
-              <FormUser
-                mode="add"
-                setGetData={setHitApi}
-                getData={hitApi}
-                roleData={role}
-              />
-              <div>
-                <Input
-                  onPointerEnterCapture={undefined}
-                  onPointerLeaveCapture={undefined}
-                  crossOrigin={undefined}
-                  value={watch("search")}
-                  {...register("search")}
-                  label="Search..."
-                />
-              </div>
-            </div>
-          }
-          columns={[
-            {
-              name: "No",
-              selector: (_, index) => index! + 1,
-              width: "50px",
-              wrap: true,
-            },
-            {
-              name: "Username",
-              selector: (row) => row.username,
-              sortable: true,
-              wrap: true,
-              width: "150px",
-            },
-            {
-              name: "Email",
-              selector: (row: any) => row.email,
-              sortable: true,
-              wrap: true,
-              width: "220px",
-            },
-            {
-              name: "First Name",
-              selector: (row: any) => row.first_name,
-              sortable: true,
-              wrap: true,
-              width: "150px",
-            },
-            {
-              name: "Last Name",
-              selector: (row: any) => row.last_name,
-              sortable: true,
-              wrap: true,
-              width: "150px",
-            },
-            {
-              name: "Role",
-              selector: (row: any) => row.role_name,
-              sortable: true,
-              wrap: true,
-              width: "150px",
-            },
-            {
-              name: "Status",
-              sortable: true,
-              wrap: true,
-              cell: (row: any) => (
-                <Chip
-                  variant="gradient"
-                  color={row.status ? "green" : "red"}
-                  value={row.status_name}
-                  className="py-0.5 px-2 text-[11px] font-medium w-fit"
-                />
-              ),
-            },
-            {
-              name: "Created At",
-              selector: (row: any) => row.created_at,
-              sortable: true,
-              wrap: true,
-              width: "230px",
-            },
+  if (initialLoading) {
+    return <LoadingSpinner fullScreen={true} />;
+  }
 
-            {
-              name: "Updated At",
-              selector: (row: any) => row.updated_at,
-              sortable: true,
-              wrap: true,
-              width: "230px",
-            },
-            {
-              name: "Created By",
-              selector: (row: any) => row.created_by,
-              sortable: true,
-              wrap: true,
-              width: "230px",
-            },
-            {
-              name: "Updated By",
-              selector: (row: any) => row.updated_by,
-              sortable: true,
-              wrap: true,
-              width: "230px",
-            },
-            {
-              name: "Action",
-              cell: (row: any) => (
-                <div className="flex items-center justify-center gap-4">
-                  <FormUser
-                    data={row}
-                    mode="edit"
-                    setGetData={setHitApi}
-                    getData={hitApi}
-                    roleData={role}
+  if (
+    userInfo.role_name !== roleAdmin &&
+    userInfo.role_name !== roleSuperAdministrator
+  ) {
+    window.location.href = toUserDashboard;
+  } else {
+    return (
+      <Layout isActive={toAdminTableUser} title="User Table">
+        <Card
+          className="w-full h-full p-4 overflow-scroll"
+          placeholder={undefined}
+          onPointerEnterCapture={undefined}
+          onPointerLeaveCapture={undefined}
+        >
+          <DataTable
+            data={data.data}
+            highlightOnHover={true}
+            progressPending={loading}
+            progressComponent={<LoadingSpinner fullScreen={false} />}
+            pagination
+            paginationServer={true}
+            paginationTotalRows={data.total_data}
+            paginationDefaultPage={1}
+            onChangeRowsPerPage={(e) =>
+              setData((prevUserData: any) => ({
+                ...prevUserData,
+                limit: e,
+              }))
+            }
+            onChangePage={(e) =>
+              setData((prevUserData: any) => ({
+                ...prevUserData,
+                offset: (e - 1) * data.limit,
+              }))
+            }
+            subHeader
+            subHeaderComponent={
+              <div className="flex items-center justify-between w-full text-start">
+                <FormUser
+                  mode="add"
+                  setGetData={setHitApi}
+                  getData={hitApi}
+                  roleData={role}
+                />
+                <div>
+                  <Input
+                    onPointerEnterCapture={undefined}
+                    onPointerLeaveCapture={undefined}
+                    crossOrigin={undefined}
+                    value={watch("search")}
+                    {...register("search")}
+                    label="Search..."
                   />
-                  <div
-                    className="text-red-500 cursor-pointer"
-                    onClick={async () =>
-                      await DeleteData(`/user/${row.id}`, setHitApi, hitApi)
-                    }
-                  >
-                    <FaTrash size={20} />
-                  </div>
                 </div>
-              ),
-              width: "150px",
-            },
-          ]}
-        />
-      </Card>
-    </Layout>
-  );
+              </div>
+            }
+            columns={[
+              {
+                name: "No",
+                selector: (_, index) => index! + 1,
+                width: "50px",
+                wrap: true,
+              },
+              {
+                name: "Username",
+                selector: (row) => row.username,
+                sortable: true,
+                wrap: true,
+                width: "150px",
+              },
+              {
+                name: "Email",
+                selector: (row: any) => row.email,
+                sortable: true,
+                wrap: true,
+                width: "220px",
+              },
+              {
+                name: "First Name",
+                selector: (row: any) => row.first_name,
+                sortable: true,
+                wrap: true,
+                width: "150px",
+              },
+              {
+                name: "Last Name",
+                selector: (row: any) => row.last_name,
+                sortable: true,
+                wrap: true,
+                width: "150px",
+              },
+              {
+                name: "Role",
+                selector: (row: any) => row.role_name,
+                sortable: true,
+                wrap: true,
+                width: "150px",
+              },
+              {
+                name: "Status",
+                sortable: true,
+                wrap: true,
+                cell: (row: any) => (
+                  <Chip
+                    variant="gradient"
+                    color={row.status ? "green" : "red"}
+                    value={row.status_name}
+                    className="py-0.5 px-2 text-[11px] font-medium w-fit"
+                  />
+                ),
+              },
+              {
+                name: "Created At",
+                selector: (row: any) => row.created_at,
+                sortable: true,
+                wrap: true,
+                width: "230px",
+              },
+
+              {
+                name: "Updated At",
+                selector: (row: any) => row.updated_at,
+                sortable: true,
+                wrap: true,
+                width: "230px",
+              },
+              {
+                name: "Created By",
+                selector: (row: any) => row.created_by_name,
+                sortable: true,
+                wrap: true,
+                width: "230px",
+              },
+              {
+                name: "Updated By",
+                selector: (row: any) => row.updated_by_name,
+                sortable: true,
+                wrap: true,
+                width: "230px",
+              },
+              {
+                name: "Action",
+                cell: (row: any) => (
+                  <div className="flex items-center justify-center gap-4">
+                    <FormUser
+                      data={row}
+                      mode="edit"
+                      setGetData={setHitApi}
+                      getData={hitApi}
+                      roleData={role}
+                    />
+                    <div
+                      className="text-red-500 cursor-pointer"
+                      onClick={async () =>
+                        await DeleteData(`/user/${row.id}`, setHitApi, hitApi)
+                      }
+                    >
+                      <FaTrash size={20} />
+                    </div>
+                  </div>
+                ),
+                width: "150px",
+              },
+            ]}
+          />
+        </Card>
+      </Layout>
+    );
+  }
 }

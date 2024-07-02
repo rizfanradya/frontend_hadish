@@ -11,6 +11,9 @@ import { LiaUsersCogSolid } from "react-icons/lia";
 import DrawerDefault from "../drawer";
 import {
   DECODE_TOKEN,
+  roleAdmin,
+  roleExpert,
+  roleSuperAdministrator,
   toAdminTableHadith,
   toAdminTableRole,
   toAdminTableTypeHadith,
@@ -36,7 +39,7 @@ export function linkItems(
       name: "Dashboard",
       href: toManageDashboard,
       icon: <HiPresentationChartBar size={sizeIcon} color={color} />,
-      role: ["ADMIN", "SUPER ADMINISTRATOR", "EXPERT"],
+      role: [roleAdmin, roleSuperAdministrator, roleExpert],
       description:
         "Provides an overview of key metrics and summaries for quick insights.",
     },
@@ -44,7 +47,7 @@ export function linkItems(
       name: "User",
       href: toAdminTableUser,
       icon: <FaUsers size={sizeIcon} color={color} />,
-      role: ["ADMIN", "SUPER ADMINISTRATOR"],
+      role: [roleAdmin, roleSuperAdministrator],
       description:
         "Allows administrators to manage user data and information comprehensively.",
     },
@@ -52,7 +55,7 @@ export function linkItems(
       name: "Hadish",
       href: toAdminTableHadith,
       icon: <FaBook size={sizeIcon} color={color} />,
-      role: ["ADMIN", "SUPER ADMINISTRATOR"],
+      role: [roleAdmin, roleSuperAdministrator],
       description:
         "Enables content management and provides detailed information related to Hadish.",
     },
@@ -60,7 +63,7 @@ export function linkItems(
       name: "List Hadish",
       href: toExpertTableHadith,
       icon: <RiFileList2Fill size={sizeIcon} color={color} />,
-      role: ["SUPER ADMINISTRATOR", "EXPERT"],
+      role: [roleSuperAdministrator, roleExpert],
       description:
         "Enables content management and provides detailed information related to Hadish.",
     },
@@ -68,7 +71,7 @@ export function linkItems(
       name: "Hadish Assessment",
       href: toExpertTableHadithAssesment,
       icon: <IoIosPaper size={sizeIcon} color={color} />,
-      role: ["EXPERT", "SUPER ADMINISTRATOR"],
+      role: [roleExpert, roleSuperAdministrator],
       description:
         "Allows experts to evaluate and assess Hadish content for quality and relevance.",
     },
@@ -76,7 +79,7 @@ export function linkItems(
       name: "Type Hadish",
       href: toAdminTableTypeHadith,
       icon: <FaBookmark size={sizeIcon} color={color} />,
-      role: ["ADMIN", "SUPER ADMINISTRATOR"],
+      role: [roleAdmin, roleSuperAdministrator],
       description:
         "Facilitates the management of categories and types within the Hadish content.",
     },
@@ -84,7 +87,7 @@ export function linkItems(
       name: "Role",
       href: toAdminTableRole,
       icon: <LiaUsersCogSolid size={sizeIcon} color={color} />,
-      role: ["ADMIN", "SUPER ADMINISTRATOR"],
+      role: [roleAdmin, roleSuperAdministrator],
       description:
         "Handles the administration of user roles and permissions within the system.",
     },

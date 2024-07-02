@@ -8,6 +8,13 @@ export const AUTHORIZATION = `Bearer ${ACCESS_TOKEN}`;
 export const DECODE_TOKEN: { exp: number; id: string } | undefined =
   ACCESS_TOKEN ? jwtDecode(ACCESS_TOKEN) : undefined;
 
+// role
+export const roleSuperAdministrator = "SUPER ADMINISTRATOR";
+export const roleAdmin = "ADMIN";
+export const roleExpert = "EXPERT";
+export const roleUser = "USER";
+
+// path
 export const toUserDashboard = "/";
 export const toManageDashboard = "/manage-dashboard";
 export const toAdminTableUser = "/manage-dashboard/admin/table-user";

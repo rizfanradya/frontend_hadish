@@ -8,7 +8,13 @@ import Swal from "sweetalert2";
 import { Card, Input } from "@material-tailwind/react";
 import DataTable from "react-data-table-component";
 import LoadingSpinner from "../../../components/loading";
-import { toExpertTableHadithAssesment } from "../../../utils/constant";
+import {
+  DECODE_TOKEN,
+  roleExpert,
+  roleSuperAdministrator,
+  toExpertTableHadithAssesment,
+  toUserDashboard,
+} from "../../../utils/constant";
 import FormHadithAssesment from "./form";
 
 export default function ExpertTableHadithAssesment({
@@ -16,7 +22,9 @@ export default function ExpertTableHadithAssesment({
 }: {
   docTitle: string;
 }) {
+  const [userInfo, setUserInfo] = useState({ role_name: "" });
   const [hitApi, setHitApi] = useState<boolean>(false);
+  const [initialLoading, setInitialLoading] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(true);
   const [typeHadith, setTypeHadith] = useState([]);
   const { register, watch } = useForm<{ search: string }>({
@@ -32,16 +40,20 @@ export default function ExpertTableHadithAssesment({
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await axiosInstance.get(
+        const userData = await axiosInstance.get(`/user/${DECODE_TOKEN?.id}`);
+        const typeHadithData = await axiosInstance.get(
           `/type_hadith/?limit=999999&offset=0`
         );
-        setTypeHadith(data.data);
+        setUserInfo(userData.data);
+        setTypeHadith(typeHadithData.data.data);
       } catch (error) {
         Swal.fire({
           icon: "error",
           title: "Server Error 404",
           allowOutsideClick: false,
         });
+      } finally {
+        setInitialLoading(false);
       }
     })();
   }, []);
@@ -69,99 +81,110 @@ export default function ExpertTableHadithAssesment({
     return () => clearTimeout(timeoutId);
   }, [watch("search"), hitApi, data.limit, data.offset]);
 
-  return (
-    <Layout
-      isActive={toExpertTableHadithAssesment}
-      title="Hadish Assesment Table"
-    >
-      <Card
-        className="w-full h-full p-4 overflow-scroll"
-        placeholder={undefined}
-        onPointerEnterCapture={undefined}
-        onPointerLeaveCapture={undefined}
+  if (initialLoading) {
+    return <LoadingSpinner fullScreen={true} />;
+  }
+
+  if (
+    userInfo.role_name !== roleExpert &&
+    userInfo.role_name !== roleSuperAdministrator
+  ) {
+    window.location.href = toUserDashboard;
+  } else {
+    return (
+      <Layout
+        isActive={toExpertTableHadithAssesment}
+        title="Hadish Assesment Table"
       >
-        <DataTable
-          data={data.data}
-          highlightOnHover={true}
-          progressPending={loading}
-          progressComponent={<LoadingSpinner fullScreen={false} />}
-          pagination
-          paginationServer={true}
-          paginationTotalRows={data.total_data}
-          paginationDefaultPage={1}
-          onChangeRowsPerPage={(e) =>
-            setData((prevUserData: any) => ({
-              ...prevUserData,
-              limit: e,
-            }))
-          }
-          onChangePage={(e) =>
-            setData((prevUserData: any) => ({
-              ...prevUserData,
-              offset: (e - 1) * data.limit,
-            }))
-          }
-          subHeader
-          subHeaderComponent={
-            <div className="flex items-center justify-between w-full text-start">
-              <div></div>
-              <div>
-                <Input
-                  onPointerEnterCapture={undefined}
-                  onPointerLeaveCapture={undefined}
-                  crossOrigin={undefined}
-                  value={watch("search")}
-                  {...register("search")}
-                  label="Search..."
-                />
-              </div>
-            </div>
-          }
-          columns={[
-            {
-              name: "No",
-              selector: (_, index) => index! + 1,
-              width: "50px",
-              wrap: true,
-            },
-            {
-              name: "Hadish",
-              selector: (row) => row.hadith,
-              sortable: true,
-              wrap: true,
-              width: "250px",
-            },
-            {
-              name: "Type Hadish",
-              selector: (row) => row.type_hadith_name,
-              sortable: true,
-              wrap: true,
-              width: "250px",
-            },
-            {
-              name: "Explanation",
-              selector: (row) => row.explanation,
-              sortable: true,
-              wrap: true,
-              width: "250px",
-            },
-            {
-              name: "Action",
-              cell: (row: any) => (
-                <div className="flex items-center justify-center gap-4">
-                  <FormHadithAssesment
-                    data={row}
-                    setGetData={setHitApi}
-                    getData={hitApi}
-                    typeHadithData={typeHadith}
+        <Card
+          className="w-full h-full p-4 overflow-scroll"
+          placeholder={undefined}
+          onPointerEnterCapture={undefined}
+          onPointerLeaveCapture={undefined}
+        >
+          <DataTable
+            data={data.data}
+            highlightOnHover={true}
+            progressPending={loading}
+            progressComponent={<LoadingSpinner fullScreen={false} />}
+            pagination
+            paginationServer={true}
+            paginationTotalRows={data.total_data}
+            paginationDefaultPage={1}
+            onChangeRowsPerPage={(e) =>
+              setData((prevUserData: any) => ({
+                ...prevUserData,
+                limit: e,
+              }))
+            }
+            onChangePage={(e) =>
+              setData((prevUserData: any) => ({
+                ...prevUserData,
+                offset: (e - 1) * data.limit,
+              }))
+            }
+            subHeader
+            subHeaderComponent={
+              <div className="flex items-center justify-between w-full text-start">
+                <div></div>
+                <div>
+                  <Input
+                    onPointerEnterCapture={undefined}
+                    onPointerLeaveCapture={undefined}
+                    crossOrigin={undefined}
+                    value={watch("search")}
+                    {...register("search")}
+                    label="Search..."
                   />
                 </div>
-              ),
-              width: "150px",
-            },
-          ]}
-        />
-      </Card>
-    </Layout>
-  );
+              </div>
+            }
+            columns={[
+              {
+                name: "No",
+                selector: (_, index) => index! + 1,
+                width: "50px",
+                wrap: true,
+              },
+              {
+                name: "Hadish",
+                selector: (row) => row.hadith,
+                sortable: true,
+                wrap: true,
+                width: "250px",
+              },
+              {
+                name: "Type Hadish",
+                selector: (row) => row.type_hadith_name,
+                sortable: true,
+                wrap: true,
+                width: "250px",
+              },
+              {
+                name: "Explanation",
+                selector: (row) => row.explanation,
+                sortable: true,
+                wrap: true,
+                width: "250px",
+              },
+              {
+                name: "Action",
+                cell: (row: any) => (
+                  <div className="flex items-center justify-center gap-4">
+                    <FormHadithAssesment
+                      data={row}
+                      setGetData={setHitApi}
+                      getData={hitApi}
+                      typeHadithData={typeHadith}
+                    />
+                  </div>
+                ),
+                width: "150px",
+              },
+            ]}
+          />
+        </Card>
+      </Layout>
+    );
+  }
 }
