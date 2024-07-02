@@ -32,7 +32,6 @@ export default function ExpertTableHadithAssesment({
   useEffect(() => {
     (async () => {
       try {
-        setLoading(true);
         const { data } = await axiosInstance.get(
           `/type_hadith/?limit=999999&offset=0`
         );
@@ -44,7 +43,6 @@ export default function ExpertTableHadithAssesment({
           allowOutsideClick: false,
         });
       }
-      setLoading(false);
     })();
   }, []);
 

@@ -20,9 +20,11 @@ import { toUserDashboard } from "../../utils/constant";
 export default function NavbarDefault({
   openDrawer,
   title,
+  username,
 }: {
   openDrawer: any;
   title: string;
+  username: string;
 }) {
   const signOut = useSignOut();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -102,7 +104,7 @@ export default function NavbarDefault({
                     onPointerEnterCapture={undefined}
                     onPointerLeaveCapture={undefined}
                   >
-                    Admin
+                    {username}
                   </Typography>
                 </MenuItem>
 

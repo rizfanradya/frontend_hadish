@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Layout, { linkItems } from "../../components/layout";
-import { toManageDashboard } from "../../utils/constant";
+import { DECODE_TOKEN, toManageDashboard } from "../../utils/constant";
 import {
   Button,
   Card,
@@ -11,13 +12,36 @@ import {
 } from "@material-tailwind/react";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import axiosInstance from "../../utils/axiosInstance";
 
 export default function ManageDashboard({ docTitle }: { docTitle: string }) {
+  const [userInfo, setUserInfo] = useState({ username: "", role_name: "" });
+
   useEffect(() => {
     (async () => {
       document.title = docTitle;
     })();
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data } = await axiosInstance.get(`/user/${DECODE_TOKEN?.id}`);
+        setUserInfo(data);
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Server Error 404",
+          allowOutsideClick: false,
+        });
+      }
+    })();
+  }, []);
+
+  const filteredLinkItems = linkItems(34, "black").filter((item) =>
+    item.role.includes(userInfo.role_name)
+  );
 
   return (
     <Layout
@@ -25,7 +49,7 @@ export default function ManageDashboard({ docTitle }: { docTitle: string }) {
       className="flex flex-wrap gap-2 justify-evenly"
       title="Dashboard"
     >
-      {linkItems(34, "black").map((doc) => (
+      {filteredLinkItems.map((doc: any) => (
         <Card
           key={doc.href}
           className="max-w-96"
@@ -39,7 +63,6 @@ export default function ManageDashboard({ docTitle }: { docTitle: string }) {
             onPointerLeaveCapture={undefined}
           >
             {doc.icon}
-
             <Typography
               variant="h5"
               color="blue-gray"

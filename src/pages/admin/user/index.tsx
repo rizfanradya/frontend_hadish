@@ -31,7 +31,6 @@ export default function AdminTableUser({ docTitle }: { docTitle: string }) {
     (async () => {
       document.title = docTitle;
       try {
-        setLoading(true);
         const { data } = await axiosInstance.get(
           `/role/?limit=999999&offset=0`
         );
@@ -43,7 +42,6 @@ export default function AdminTableUser({ docTitle }: { docTitle: string }) {
           allowOutsideClick: false,
         });
       }
-      setLoading(false);
     })();
   }, []);
 
