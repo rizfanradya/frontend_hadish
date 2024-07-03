@@ -22,7 +22,6 @@ type dataType = {
   created_by: number;
   updated_by: number;
   hadith: number;
-  type_hadith: number;
   explanation: number;
 };
 
@@ -55,7 +54,6 @@ export default function FormHadith({
         await axiosInstance.put(`/hadith/${data?.id}`, {
           created_by: data?.created_by,
           updated_by: DECODE_TOKEN?.id,
-          type_hadith: data?.type_hadith,
           hadith: watch("hadith"),
           explanation: watch("explanation"),
         });

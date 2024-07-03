@@ -148,13 +148,6 @@ export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
                 width: "250px",
               },
               {
-                name: "Type Hadish",
-                selector: (row) => row.type_hadith_name,
-                sortable: true,
-                wrap: true,
-                width: "250px",
-              },
-              {
                 name: "Explanation",
                 selector: (row) => row.explanation,
                 sortable: true,
