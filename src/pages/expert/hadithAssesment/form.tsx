@@ -30,31 +30,31 @@ export default function FormHadithAssesment({
   const [loading, setLoading] = useState<boolean>(false);
   const { register, watch } = useForm<dataType>({ defaultValues: data });
 
-  useEffect(() => {
-    const timeoutId = setTimeout(async () => {
-      if (watch("type_hadith") !== data?.type_hadith) {
-        try {
-          setLoading(true);
-          await axiosInstance.put(`/hadith/${data?.id}`, {
-            created_by: data?.created_by,
-            updated_by: DECODE_TOKEN?.id,
-            type_hadith: watch("type_hadith"),
-            hadith: data?.hadith,
-            explanation: data?.explanation,
-          });
-          handleRefreshData();
-        } catch (error) {
-          Swal.fire({
-            icon: "error",
-            title: "Server Error 404",
-            allowOutsideClick: false,
-          });
-        }
-        setLoading(false);
-      }
-    }, 1000);
-    return () => clearTimeout(timeoutId);
-  }, [watch("type_hadith")]);
+  // useEffect(() => {
+  //   const timeoutId = setTimeout(async () => {
+  //     if (watch("type_hadith") !== data?.type_hadith) {
+  //       try {
+  //         setLoading(true);
+  //         await axiosInstance.put(`/hadith/${data?.id}`, {
+  //           created_by: data?.created_by,
+  //           updated_by: DECODE_TOKEN?.id,
+  //           type_hadith: watch("type_hadith"),
+  //           hadith: data?.hadith,
+  //           explanation: data?.explanation,
+  //         });
+  //         handleRefreshData();
+  //       } catch (error) {
+  //         Swal.fire({
+  //           icon: "error",
+  //           title: "Server Error 404",
+  //           allowOutsideClick: false,
+  //         });
+  //       }
+  //       setLoading(false);
+  //     }
+  //   }, 1000);
+  //   return () => clearTimeout(timeoutId);
+  // }, [watch("type_hadith")]);
 
   function handleRefreshData() {
     setGetData(!getData);
