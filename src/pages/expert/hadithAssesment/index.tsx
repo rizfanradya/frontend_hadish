@@ -147,17 +147,21 @@ export default function ExpertTableHadithAssesment({
                 wrap: true,
               },
               {
-                name: "Hadish",
-                selector: (row) => row.hadith,
+                name: "Hadish Arab",
+                selector: (row) => row.hadith_arab,
                 sortable: true,
-                wrap: true,
+                width: "250px",
+              },
+              {
+                name: "Hadish Melayu",
+                selector: (row) => row.hadith_melayu,
+                sortable: true,
                 width: "250px",
               },
               {
                 name: "Explanation",
                 selector: (row) => row.explanation,
                 sortable: true,
-                wrap: true,
                 width: "250px",
               },
               {
