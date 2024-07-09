@@ -10,19 +10,16 @@ import {
   DialogBody,
   DialogFooter,
   DialogHeader,
-  Input,
   Textarea,
   Typography,
 } from "@material-tailwind/react";
 import { FaEdit } from "react-icons/fa";
-import { DECODE_TOKEN } from "../../../utils/constant";
 
 type dataType = {
   id: number;
-  created_by: number;
-  updated_by: number;
-  hadith: number;
-  explanation: number;
+  hadith_arab: string;
+  hadith_melayu: string;
+  explanation: string;
 };
 
 export default function FormHadith({
@@ -45,16 +42,14 @@ export default function FormHadith({
       setLoading(true);
       if (mode === "add") {
         await axiosInstance.post(`/hadith/`, {
-          created_by: DECODE_TOKEN?.id,
-          updated_by: DECODE_TOKEN?.id,
-          hadith: watch("hadith"),
+          hadith_arab: watch("hadith_arab"),
+          hadith_melayu: watch("hadith_melayu"),
           explanation: watch("explanation"),
         });
       } else {
         await axiosInstance.put(`/hadith/${data?.id}`, {
-          created_by: data?.created_by,
-          updated_by: DECODE_TOKEN?.id,
-          hadith: watch("hadith"),
+          hadith_arab: watch("hadith_arab"),
+          hadith_melayu: watch("hadith_melayu"),
           explanation: watch("explanation"),
         });
       }
@@ -129,14 +124,32 @@ export default function FormHadith({
               onPointerEnterCapture={undefined}
               onPointerLeaveCapture={undefined}
             >
-              Hadish
+              Hadish Arab
             </Typography>
-            <Input
+            <Textarea
               onPointerEnterCapture={undefined}
               onPointerLeaveCapture={undefined}
-              crossOrigin={undefined}
-              error={!watch("hadith")}
-              {...register("hadith")}
+              resize
+              error={!watch("hadith_arab")}
+              {...register("hadith_arab")}
+            />
+          </div>
+
+          <div>
+            <Typography
+              variant="h6"
+              placeholder={undefined}
+              onPointerEnterCapture={undefined}
+              onPointerLeaveCapture={undefined}
+            >
+              Hadish Melayu
+            </Typography>
+            <Textarea
+              onPointerEnterCapture={undefined}
+              onPointerLeaveCapture={undefined}
+              resize
+              error={!watch("hadith_melayu")}
+              {...register("hadith_melayu")}
             />
           </div>
 
@@ -184,7 +197,11 @@ export default function FormHadith({
             placeholder={undefined}
             onPointerEnterCapture={undefined}
             onPointerLeaveCapture={undefined}
-            disabled={!watch("hadith") || !watch("explanation")}
+            disabled={
+              !watch("explanation") ||
+              !watch("hadith_arab") ||
+              !watch("hadith_melayu")
+            }
           >
             Save
           </Button>

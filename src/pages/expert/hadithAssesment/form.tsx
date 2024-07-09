@@ -9,8 +9,6 @@ import { Button } from "@material-tailwind/react";
 
 type dataType = {
   id: number;
-  created_by: number;
-  updated_by: number;
   hadith: number;
   type_hadith: number;
   explanation: number;

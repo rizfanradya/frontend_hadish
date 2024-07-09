@@ -14,12 +14,9 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { FaEdit } from "react-icons/fa";
-import { DECODE_TOKEN } from "../../../utils/constant";
 
 type dataType = {
   id: number;
-  created_by: number;
-  updated_by: number;
   type: string;
 };
 
@@ -43,14 +40,10 @@ export default function FormTypeHadith({
       setLoading(true);
       if (mode === "add") {
         await axiosInstance.post(`/type_hadith/`, {
-          created_by: DECODE_TOKEN?.id,
-          updated_by: DECODE_TOKEN?.id,
           type: watch("type"),
         });
       } else {
         await axiosInstance.put(`/type_hadith/${data?.id}`, {
-          created_by: data?.created_by,
-          updated_by: DECODE_TOKEN?.id,
           type: watch("type"),
         });
       }

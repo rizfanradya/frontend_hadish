@@ -19,7 +19,6 @@ import { DECODE_TOKEN } from "../../../utils/constant";
 type dataType = {
   id: number;
   created_by: number;
-  updated_by: number;
   role: string;
 };
 
@@ -68,13 +67,10 @@ export default function FormRole({
       if (mode === "add") {
         await axiosInstance.post(`/role/`, {
           created_by: DECODE_TOKEN?.id,
-          updated_by: DECODE_TOKEN?.id,
           role: watch("role"),
         });
       } else {
         await axiosInstance.put(`/role/${data?.id}`, {
-          created_by: data?.created_by,
-          updated_by: DECODE_TOKEN?.id,
           role: watch("role"),
         });
       }

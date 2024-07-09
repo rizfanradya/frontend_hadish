@@ -21,7 +21,6 @@ import { FaEye, FaEyeSlash } from "react-icons/fa6";
 type dataType = {
   id: number;
   created_by: number;
-  updated_by: number;
   username: string;
   first_name: string;
   last_name: string;
@@ -86,7 +85,6 @@ export default function FormUser({
       if (mode === "add") {
         await axiosInstance.post(`/user/`, {
           created_by: DECODE_TOKEN?.id,
-          updated_by: DECODE_TOKEN?.id,
           username: watch("username"),
           email: watch("email"),
           first_name: watch("first_name"),
@@ -97,8 +95,6 @@ export default function FormUser({
         });
       } else {
         await axiosInstance.put(`/user/${data?.id}`, {
-          created_by: data?.created_by,
-          updated_by: DECODE_TOKEN?.id,
           email: watch("email"),
           first_name: watch("first_name"),
           last_name: watch("last_name"),

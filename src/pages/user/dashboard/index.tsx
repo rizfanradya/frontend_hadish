@@ -147,7 +147,6 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
       setLoading(true);
       await axiosInstance.post(`/user`, {
         created_by: 0,
-        updated_by: 0,
         username: watch("username"),
         first_name: watch("first_name"),
         last_name: watch("last_name"),
