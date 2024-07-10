@@ -18,6 +18,7 @@ import {
   toLandingPage,
 } from "../../utils/constant";
 import FormHadith from "./form";
+import UploadHadith from "./upload";
 
 export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
   const [userInfo, setUserInfo] = useState({ role_name: "" });
@@ -116,11 +117,14 @@ export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
             subHeader
             subHeaderComponent={
               <div className="flex items-center justify-between w-full text-start">
-                <FormHadith
-                  mode="add"
-                  setGetData={setHitApi}
-                  getData={hitApi}
-                />
+                <div className="flex gap-2">
+                  <FormHadith
+                    mode="add"
+                    setGetData={setHitApi}
+                    getData={hitApi}
+                  />
+                  <UploadHadith getData={hitApi} setGetData={setHitApi} />
+                </div>
                 <div>
                   <Input
                     onPointerEnterCapture={undefined}
