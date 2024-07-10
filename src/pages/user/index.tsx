@@ -201,7 +201,6 @@ export default function AdminTableUser({ docTitle }: { docTitle: string }) {
                 wrap: true,
                 width: "250px",
               },
-
               {
                 name: "Updated At",
                 selector: (row: any) => row.updated_at,

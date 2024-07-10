@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-refresh/only-export-components */
 import { ReactNode, useEffect, useState } from "react";
@@ -10,7 +11,10 @@ import { HiPresentationChartBar } from "react-icons/hi2";
 import { LiaUsersCogSolid } from "react-icons/lia";
 import DrawerDefault from "../drawer";
 import {
+  ACCESS_TOKEN_NAME,
   DECODE_TOKEN,
+  REFRESH_TOKEN,
+  REFRESH_TOKEN_NAME,
   roleAdmin,
   roleExpert,
   roleSuperAdministrator,
@@ -119,9 +123,21 @@ export default function Layout({
       if (decodedToken.exp) {
         const currentTime = Math.floor(Date.now() / 1000);
         const timeToExpire = decodedToken.exp - currentTime;
-        const timeoutId = setTimeout(() => {
-          signOut();
-          window.location.href = toLandingPage;
+        const timeoutId = setTimeout(async () => {
+          try {
+            const response = await axiosInstance.post(
+              `/refresh_token/${REFRESH_TOKEN}`
+            );
+            localStorage.setItem(ACCESS_TOKEN_NAME, response.data.access_token);
+            localStorage.setItem(
+              REFRESH_TOKEN_NAME,
+              response.data.refresh_token
+            );
+            window.location.reload();
+          } catch (error) {
+            signOut();
+            window.location.href = toLandingPage;
+          }
         }, timeToExpire * 1000);
         return () => clearTimeout(timeoutId);
       }

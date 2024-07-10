@@ -27,7 +27,7 @@ import axiosInstance from "../../utils/axiosInstance";
 import { jwtDecode } from "jwt-decode";
 import Swal from "sweetalert2";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
-import { toDashboard } from "../../utils/constant";
+import { REFRESH_TOKEN_NAME, toDashboard } from "../../utils/constant";
 
 export default function LandingPage({ docTitle }: { docTitle: string }) {
   const authHeader = useAuthHeader();
@@ -195,7 +195,8 @@ export default function LandingPage({ docTitle }: { docTitle: string }) {
         },
       });
       if (signInSuccess) {
-        window.location.reload();
+        localStorage.setItem(REFRESH_TOKEN_NAME, response.data.refresh_token);
+        setTimeout(() => window.location.reload(), 200);
       } else {
         handleOpenSignIn();
         Swal.fire({
