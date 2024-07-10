@@ -2,31 +2,28 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import Layout from "../../../components/layout";
-import axiosInstance from "../../../utils/axiosInstance";
+import Layout from "../../components/layout";
+import {
+  DECODE_TOKEN,
+  roleAdmin,
+  roleSuperAdministrator,
+  toAdminTableRole,
+  toLandingPage,
+} from "../../utils/constant";
+import axiosInstance from "../../utils/axiosInstance";
 import Swal from "sweetalert2";
 import { Card, Input } from "@material-tailwind/react";
 import DataTable from "react-data-table-component";
-import LoadingSpinner from "../../../components/loading";
-import {
-  DECODE_TOKEN,
-  roleExpert,
-  roleSuperAdministrator,
-  toExpertTableHadithAssesment,
-  toUserDashboard,
-} from "../../../utils/constant";
-import FormHadithAssesment from "./form";
+import LoadingSpinner from "../../components/loading";
+import { DeleteData } from "../../components/deleteData";
+import { FaTrash } from "react-icons/fa6";
+import FormRole from "./form";
 
-export default function ExpertTableHadithAssesment({
-  docTitle,
-}: {
-  docTitle: string;
-}) {
+export default function AdminTableRole({ docTitle }: { docTitle: string }) {
   const [userInfo, setUserInfo] = useState({ role_name: "" });
   const [hitApi, setHitApi] = useState<boolean>(false);
   const [initialLoading, setInitialLoading] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(true);
-  const [typeHadith, setTypeHadith] = useState([]);
   const { register, watch } = useForm<{ search: string }>({
     defaultValues: { search: "" },
   });
@@ -40,12 +37,8 @@ export default function ExpertTableHadithAssesment({
   useEffect(() => {
     (async () => {
       try {
-        const userData = await axiosInstance.get(`/user/${DECODE_TOKEN?.id}`);
-        const typeHadithData = await axiosInstance.get(
-          `/type_hadith/?limit=999999&offset=0`
-        );
-        setUserInfo(userData.data);
-        setTypeHadith(typeHadithData.data.data);
+        const { data } = await axiosInstance.get(`/user/${DECODE_TOKEN?.id}`);
+        setUserInfo(data);
       } catch (error) {
         Swal.fire({
           icon: "error",
@@ -64,7 +57,7 @@ export default function ExpertTableHadithAssesment({
       try {
         setLoading(true);
         const response = await axiosInstance.get(
-          `/hadith/?limit=${data.limit}&offset=${data.offset}&search=${watch(
+          `/role/?limit=${data.limit}&offset=${data.offset}&search=${watch(
             "search"
           )}`
         );
@@ -86,16 +79,13 @@ export default function ExpertTableHadithAssesment({
   }
 
   if (
-    userInfo.role_name !== roleExpert &&
+    userInfo.role_name !== roleAdmin &&
     userInfo.role_name !== roleSuperAdministrator
   ) {
-    window.location.href = toUserDashboard;
+    window.location.href = toLandingPage;
   } else {
     return (
-      <Layout
-        isActive={toExpertTableHadithAssesment}
-        title="Hadish Assesment Table"
-      >
+      <Layout isActive={toAdminTableRole} title="Role Table">
         <Card
           className="w-full h-full p-4 overflow-scroll"
           placeholder={undefined}
@@ -126,7 +116,7 @@ export default function ExpertTableHadithAssesment({
             subHeader
             subHeaderComponent={
               <div className="flex items-center justify-between w-full text-start">
-                <div></div>
+                <FormRole mode="add" setGetData={setHitApi} getData={hitApi} />
                 <div>
                   <Input
                     onPointerEnterCapture={undefined}
@@ -147,33 +137,59 @@ export default function ExpertTableHadithAssesment({
                 wrap: true,
               },
               {
-                name: "Hadish Arab",
-                selector: (row) => row.hadith_arab,
+                name: "Role",
+                selector: (row) => row.role,
                 sortable: true,
+                wrap: true,
                 width: "250px",
               },
               {
-                name: "Hadish Melayu",
-                selector: (row) => row.hadith_melayu,
+                name: "Created At",
+                selector: (row: any) => row.created_at,
                 sortable: true,
-                width: "250px",
+                wrap: true,
+                width: "230px",
+              },
+
+              {
+                name: "Updated At",
+                selector: (row: any) => row.updated_at,
+                sortable: true,
+                wrap: true,
+                width: "230px",
               },
               {
-                name: "Explanation",
-                selector: (row) => row.explanation,
+                name: "Created By",
+                selector: (row: any) => row.created_by_name,
                 sortable: true,
-                width: "250px",
+                wrap: true,
+                width: "230px",
+              },
+              {
+                name: "Updated By",
+                selector: (row: any) => row.updated_by_name,
+                sortable: true,
+                wrap: true,
+                width: "230px",
               },
               {
                 name: "Action",
                 cell: (row: any) => (
                   <div className="flex items-center justify-center gap-4">
-                    <FormHadithAssesment
+                    <FormRole
                       data={row}
+                      mode="edit"
                       setGetData={setHitApi}
                       getData={hitApi}
-                      typeHadithData={typeHadith}
                     />
+                    <div
+                      className="text-red-500 cursor-pointer"
+                      onClick={async () =>
+                        await DeleteData(`/role/${row.id}`, setHitApi, hitApi)
+                      }
+                    >
+                      <FaTrash size={20} />
+                    </div>
                   </div>
                 ),
                 width: "150px",

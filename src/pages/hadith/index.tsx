@@ -2,28 +2,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import Layout from "../../../components/layout";
-import axiosInstance from "../../../utils/axiosInstance";
+import Layout from "../../components/layout";
+import axiosInstance from "../../utils/axiosInstance";
 import Swal from "sweetalert2";
 import { Card, Input } from "@material-tailwind/react";
 import DataTable from "react-data-table-component";
-import LoadingSpinner from "../../../components/loading";
-import { DeleteData } from "../../../components/deleteData";
+import LoadingSpinner from "../../components/loading";
+import { DeleteData } from "../../components/deleteData";
 import { FaTrash } from "react-icons/fa6";
 import {
   DECODE_TOKEN,
   roleAdmin,
   roleSuperAdministrator,
-  toAdminTableTypeHadith,
-  toUserDashboard,
-} from "../../../utils/constant";
-import FormTypeHadith from "./form";
+  toAdminTableHadith,
+  toLandingPage,
+} from "../../utils/constant";
+import FormHadith from "./form";
 
-export default function AdminTableTypeHadith({
-  docTitle,
-}: {
-  docTitle: string;
-}) {
+export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
   const [userInfo, setUserInfo] = useState({ role_name: "" });
   const [hitApi, setHitApi] = useState<boolean>(false);
   const [initialLoading, setInitialLoading] = useState<boolean>(true);
@@ -61,9 +57,9 @@ export default function AdminTableTypeHadith({
       try {
         setLoading(true);
         const response = await axiosInstance.get(
-          `/type_hadith/?limit=${data.limit}&offset=${
-            data.offset
-          }&search=${watch("search")}`
+          `/hadith/?limit=${data.limit}&offset=${data.offset}&search=${watch(
+            "search"
+          )}`
         );
         setData(response.data);
       } catch (error) {
@@ -86,10 +82,10 @@ export default function AdminTableTypeHadith({
     userInfo.role_name !== roleAdmin &&
     userInfo.role_name !== roleSuperAdministrator
   ) {
-    window.location.href = toUserDashboard;
+    window.location.href = toLandingPage;
   } else {
     return (
-      <Layout isActive={toAdminTableTypeHadith} title="Type Hadish Table">
+      <Layout isActive={toAdminTableHadith} title="Hadish Table">
         <Card
           className="w-full h-full p-4 overflow-scroll"
           placeholder={undefined}
@@ -120,7 +116,7 @@ export default function AdminTableTypeHadith({
             subHeader
             subHeaderComponent={
               <div className="flex items-center justify-between w-full text-start">
-                <FormTypeHadith
+                <FormHadith
                   mode="add"
                   setGetData={setHitApi}
                   getData={hitApi}
@@ -145,10 +141,21 @@ export default function AdminTableTypeHadith({
                 wrap: true,
               },
               {
-                name: "Type",
-                selector: (row) => row.type,
+                name: "Hadish Arab",
+                selector: (row) => row.hadith_arab,
                 sortable: true,
-                wrap: true,
+                width: "250px",
+              },
+              {
+                name: "Hadish Melayu",
+                selector: (row) => row.hadith_melayu,
+                sortable: true,
+                width: "250px",
+              },
+              {
+                name: "Explanation",
+                selector: (row) => row.explanation,
+                sortable: true,
                 width: "250px",
               },
               {
@@ -184,7 +191,7 @@ export default function AdminTableTypeHadith({
                 name: "Action",
                 cell: (row: any) => (
                   <div className="flex items-center justify-center gap-4">
-                    <FormTypeHadith
+                    <FormHadith
                       data={row}
                       mode="edit"
                       setGetData={setHitApi}
@@ -193,11 +200,7 @@ export default function AdminTableTypeHadith({
                     <div
                       className="text-red-500 cursor-pointer"
                       onClick={async () =>
-                        await DeleteData(
-                          `/type_hadith/${row.id}`,
-                          setHitApi,
-                          hitApi
-                        )
+                        await DeleteData(`/hadith/${row.id}`, setHitApi, hitApi)
                       }
                     >
                       <FaTrash size={20} />

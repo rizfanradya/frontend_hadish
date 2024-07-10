@@ -15,7 +15,7 @@ import { HiOutlineChevronDown } from "react-icons/hi";
 import { HiMiniPower } from "react-icons/hi2";
 import { FaUserCircle } from "react-icons/fa";
 import { FiMenu } from "react-icons/fi";
-import { toUserDashboard } from "../../utils/constant";
+import { toLandingPage } from "../../utils/constant";
 
 export default function NavbarDefault({
   openDrawer,
@@ -114,7 +114,7 @@ export default function NavbarDefault({
                   placeholder={undefined}
                   onClick={() => {
                     signOut();
-                    window.location.href = toUserDashboard;
+                    window.location.href = toLandingPage;
                   }}
                 >
                   <Typography

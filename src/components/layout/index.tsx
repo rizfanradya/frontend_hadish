@@ -18,10 +18,10 @@ import {
   toAdminTableRole,
   toAdminTableTypeHadith,
   toAdminTableUser,
+  toDashboard,
   toExpertTableHadith,
   toExpertTableHadithAssesment,
-  toManageDashboard,
-  toUserDashboard,
+  toLandingPage,
 } from "../../utils/constant";
 import { IoIosPaper } from "react-icons/io";
 import { jwtDecode } from "jwt-decode";
@@ -37,7 +37,7 @@ export function linkItems(
   return [
     {
       name: "Dashboard",
-      href: toManageDashboard,
+      href: toDashboard,
       icon: <HiPresentationChartBar size={sizeIcon} color={color} />,
       role: [roleAdmin, roleSuperAdministrator, roleExpert],
       description:
@@ -121,7 +121,7 @@ export default function Layout({
         const timeToExpire = decodedToken.exp - currentTime;
         const timeoutId = setTimeout(() => {
           signOut();
-          window.location.href = toUserDashboard;
+          window.location.href = toLandingPage;
         }, timeToExpire * 1000);
         return () => clearTimeout(timeoutId);
       }
@@ -148,7 +148,7 @@ export default function Layout({
   );
 
   if (!authHeader && !authUser) {
-    window.location.href = toUserDashboard;
+    window.location.href = toLandingPage;
   } else
     return (
       <div className="relative flex gap-4 px-2 py-4 md:px-4 bg-blue-gray-50/50">

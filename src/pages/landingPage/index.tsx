@@ -18,18 +18,18 @@ import { useForm } from "react-hook-form";
 import { FaInfoCircle, FaRegCheckCircle, FaSearch } from "react-icons/fa";
 import { FaEye, FaEyeSlash, FaXmark } from "react-icons/fa6";
 import { HiBars3 } from "react-icons/hi2";
-import { toManageDashboard } from "../../../utils/constant";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import useSignOut from "react-auth-kit/hooks/useSignOut";
 import { isEmail, isStrongPassword } from "validator";
 import { ImCross } from "react-icons/im";
-import axiosInstance from "../../../utils/axiosInstance";
+import axiosInstance from "../../utils/axiosInstance";
 import { jwtDecode } from "jwt-decode";
 import Swal from "sweetalert2";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
+import { toDashboard } from "../../utils/constant";
 
-export default function UserDashboard({ docTitle }: { docTitle: string }) {
+export default function LandingPage({ docTitle }: { docTitle: string }) {
   const authHeader = useAuthHeader();
   const authUser = useAuthUser();
   const authSignIn = useSignIn();
@@ -254,7 +254,7 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
                 >
                   <Typography
                     as="a"
-                    href={toManageDashboard}
+                    href={toDashboard}
                     variant="small"
                     color="white"
                     className="font-medium"
@@ -369,7 +369,7 @@ export default function UserDashboard({ docTitle }: { docTitle: string }) {
               >
                 <Typography
                   as="a"
-                  href={toManageDashboard}
+                  href={toDashboard}
                   variant="small"
                   color="white"
                   className="font-medium"

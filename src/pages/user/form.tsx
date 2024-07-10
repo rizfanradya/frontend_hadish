@@ -3,7 +3,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import axiosInstance from "../../../utils/axiosInstance";
+import axiosInstance from "../../utils/axiosInstance";
 import {
   Button,
   Dialog,
@@ -14,7 +14,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { FaEdit, FaInfoCircle } from "react-icons/fa";
-import { DECODE_TOKEN } from "../../../utils/constant";
+import { DECODE_TOKEN } from "../../utils/constant";
 import { isEmail, isStrongPassword } from "validator";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 

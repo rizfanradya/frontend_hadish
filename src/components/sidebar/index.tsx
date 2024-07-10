@@ -7,7 +7,7 @@ import {
 } from "@material-tailwind/react";
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { toManageDashboard } from "../../utils/constant";
+import { toDashboard } from "../../utils/constant";
 
 export default function Sidebar({
   linkItems,
@@ -34,7 +34,7 @@ export default function Sidebar({
           color="blue-gray"
           className="text-center"
           as="a"
-          href={toManageDashboard}
+          href={toDashboard}
           placeholder={undefined}
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}

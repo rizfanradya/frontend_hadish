@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import Layout, { linkItems } from "../../components/layout";
-import { DECODE_TOKEN, toManageDashboard } from "../../utils/constant";
+import { DECODE_TOKEN, toDashboard } from "../../utils/constant";
 import {
   Button,
   Card,
@@ -45,7 +45,7 @@ export default function ManageDashboard({ docTitle }: { docTitle: string }) {
 
   return (
     <Layout
-      isActive={toManageDashboard}
+      isActive={toDashboard}
       className="flex flex-wrap gap-2 justify-evenly"
       title="Dashboard"
     >

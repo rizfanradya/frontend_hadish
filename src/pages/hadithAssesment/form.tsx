@@ -3,7 +3,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import axiosInstance from "../../../utils/axiosInstance";
+import axiosInstance from "../../utils/axiosInstance";
 import {
   Button,
   Card,

@@ -16,13 +16,12 @@ export const roleExpert = "EXPERT";
 export const roleUser = "USER";
 
 // path
-export const toUserDashboard = "/";
-export const toManageDashboard = "/manage-dashboard";
-export const toAdminTableUser = "/manage-dashboard/admin/table-user";
-export const toAdminTableHadith = "/manage-dashboard/admin/table-hadish";
-export const toAdminTableRole = "/manage-dashboard/admin/table-role";
-export const toAdminTableTypeHadith =
-  "/manage-dashboard/admin/table-type-hadith";
-export const toExpertTableHadith = "/manage-dashboard/expert/table-list-hadish";
+export const toLandingPage = "/";
+export const toDashboard = "/dashboard";
+export const toAdminTableUser = "/dashboard/admin/user";
+export const toAdminTableHadith = "/dashboard/admin/hadish";
+export const toAdminTableRole = "/dashboard/admin/role";
+export const toAdminTableTypeHadith = "/dashboard/admin/type-hadith";
+export const toExpertTableHadith = "/dashboard/expert/list-hadish";
 export const toExpertTableHadithAssesment =
-  "/manage-dashboard/expert/table-hadish-assesment";
+  "/dashboard/expert/hadish-assesment";

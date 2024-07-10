@@ -1,29 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import Layout from "../../../components/layout";
-import axiosInstance from "../../../utils/axiosInstance";
-import Swal from "sweetalert2";
-import { Card, Input } from "@material-tailwind/react";
-import DataTable from "react-data-table-component";
-import LoadingSpinner from "../../../components/loading";
-import { DeleteData } from "../../../components/deleteData";
-import { FaTrash } from "react-icons/fa6";
+import Layout from "../../components/layout";
 import {
   DECODE_TOKEN,
   roleAdmin,
   roleSuperAdministrator,
-  toAdminTableHadith,
-  toUserDashboard,
-} from "../../../utils/constant";
-import FormHadith from "./form";
+  toAdminTableUser,
+  toLandingPage,
+} from "../../utils/constant";
+import { Card, Chip, Input } from "@material-tailwind/react";
+import DataTable from "react-data-table-component";
+import LoadingSpinner from "../../components/loading";
+import { FaTrash } from "react-icons/fa6";
+import { DeleteData } from "../../components/deleteData";
+import axiosInstance from "../../utils/axiosInstance";
+import Swal from "sweetalert2";
+import FormUser from "./form";
+import { useForm } from "react-hook-form";
 
-export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
+export default function AdminTableUser({ docTitle }: { docTitle: string }) {
   const [userInfo, setUserInfo] = useState({ role_name: "" });
   const [hitApi, setHitApi] = useState<boolean>(false);
   const [initialLoading, setInitialLoading] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(true);
+  const [role, setRole] = useState([]);
   const { register, watch } = useForm<{ search: string }>({
     defaultValues: { search: "" },
   });
@@ -36,9 +37,14 @@ export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
 
   useEffect(() => {
     (async () => {
+      document.title = docTitle;
       try {
-        const { data } = await axiosInstance.get(`/user/${DECODE_TOKEN?.id}`);
-        setUserInfo(data);
+        const roleData = await axiosInstance.get(
+          `/role/?limit=999999&offset=0`
+        );
+        const userData = await axiosInstance.get(`/user/${DECODE_TOKEN?.id}`);
+        setRole(roleData.data.data);
+        setUserInfo(userData.data);
       } catch (error) {
         Swal.fire({
           icon: "error",
@@ -52,12 +58,11 @@ export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
   }, []);
 
   useEffect(() => {
-    document.title = docTitle;
     const timeoutId = setTimeout(async () => {
       try {
         setLoading(true);
         const response = await axiosInstance.get(
-          `/hadith/?limit=${data.limit}&offset=${data.offset}&search=${watch(
+          `/user/?limit=${data.limit}&offset=${data.offset}&search=${watch(
             "search"
           )}`
         );
@@ -82,10 +87,10 @@ export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
     userInfo.role_name !== roleAdmin &&
     userInfo.role_name !== roleSuperAdministrator
   ) {
-    window.location.href = toUserDashboard;
+    window.location.href = toLandingPage;
   } else {
     return (
-      <Layout isActive={toAdminTableHadith} title="Hadish Table">
+      <Layout isActive={toAdminTableUser} title="User Table">
         <Card
           className="w-full h-full p-4 overflow-scroll"
           placeholder={undefined}
@@ -116,10 +121,11 @@ export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
             subHeader
             subHeaderComponent={
               <div className="flex items-center justify-between w-full text-start">
-                <FormHadith
+                <FormUser
                   mode="add"
                   setGetData={setHitApi}
                   getData={hitApi}
+                  roleData={role}
                 />
                 <div>
                   <Input
@@ -141,22 +147,52 @@ export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
                 wrap: true,
               },
               {
-                name: "Hadish Arab",
-                selector: (row) => row.hadith_arab,
+                name: "Username",
+                selector: (row) => row.username,
                 sortable: true,
-                width: "250px",
+                wrap: true,
+                width: "150px",
               },
               {
-                name: "Hadish Melayu",
-                selector: (row) => row.hadith_melayu,
+                name: "Email",
+                selector: (row: any) => row.email,
                 sortable: true,
-                width: "250px",
+                wrap: true,
+                width: "220px",
               },
               {
-                name: "Explanation",
-                selector: (row) => row.explanation,
+                name: "First Name",
+                selector: (row: any) => row.first_name,
                 sortable: true,
-                width: "250px",
+                wrap: true,
+                width: "150px",
+              },
+              {
+                name: "Last Name",
+                selector: (row: any) => row.last_name,
+                sortable: true,
+                wrap: true,
+                width: "150px",
+              },
+              {
+                name: "Role",
+                selector: (row: any) => row.role_name,
+                sortable: true,
+                wrap: true,
+                width: "150px",
+              },
+              {
+                name: "Status",
+                sortable: true,
+                wrap: true,
+                cell: (row: any) => (
+                  <Chip
+                    variant="gradient"
+                    color={row.status ? "green" : "red"}
+                    value={row.status_name}
+                    className="py-0.5 px-2 text-[11px] font-medium w-fit"
+                  />
+                ),
               },
               {
                 name: "Created At",
@@ -191,16 +227,17 @@ export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
                 name: "Action",
                 cell: (row: any) => (
                   <div className="flex items-center justify-center gap-4">
-                    <FormHadith
+                    <FormUser
                       data={row}
                       mode="edit"
                       setGetData={setHitApi}
                       getData={hitApi}
+                      roleData={role}
                     />
                     <div
                       className="text-red-500 cursor-pointer"
                       onClick={async () =>
-                        await DeleteData(`/hadith/${row.id}`, setHitApi, hitApi)
+                        await DeleteData(`/user/${row.id}`, setHitApi, hitApi)
                       }
                     >
                       <FaTrash size={20} />

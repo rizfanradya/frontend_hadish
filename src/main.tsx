@@ -8,29 +8,29 @@ import {
   toAdminTableRole,
   toAdminTableTypeHadith,
   toAdminTableUser,
+  toDashboard,
   toExpertTableHadithAssesment,
-  toManageDashboard,
-  toUserDashboard,
+  toLandingPage,
 } from "./utils/constant";
-import UserDashboard from "./pages/user/dashboard";
 import { ThemeProvider } from "@material-tailwind/react";
 import createStore from "react-auth-kit/createStore";
 import AuthProvider from "react-auth-kit/AuthProvider";
-import AdminTableUser from "./pages/admin/user";
-import ManageDashboard from "./pages/manageDashboard";
-import AdminTableRole from "./pages/admin/role";
-import AdminTableTypeHadith from "./pages/admin/typeHadith";
-import AdminTableHadith from "./pages/admin/hadith";
-import ExpertTableHadithAssesment from "./pages/expert/hadithAssesment";
+import AdminTableUser from "./pages/user";
+import ManageDashboard from "./pages/dashboard";
+import AdminTableRole from "./pages/role";
+import AdminTableTypeHadith from "./pages/typeHadith";
+import AdminTableHadith from "./pages/hadith";
+import ExpertTableHadithAssesment from "./pages/hadithAssesment";
+import LandingPage from "./pages/landingPage";
 
 const documentTitle = "Fake Hadish -";
 const router = createBrowserRouter([
   {
-    path: toUserDashboard,
-    element: <UserDashboard docTitle={`${documentTitle} Home`} />,
+    path: toLandingPage,
+    element: <LandingPage docTitle={`${documentTitle} Home`} />,
   },
   {
-    path: toManageDashboard,
+    path: toDashboard,
     element: <ManageDashboard docTitle={`${documentTitle} Manage Dashboard`} />,
   },
   {
