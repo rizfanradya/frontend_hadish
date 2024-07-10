@@ -156,7 +156,7 @@ export default function AdminTableTypeHadith({
                 selector: (row: any) => row.created_at,
                 sortable: true,
                 wrap: true,
-                width: "230px",
+                width: "250px",
               },
 
               {
@@ -164,7 +164,7 @@ export default function AdminTableTypeHadith({
                 selector: (row: any) => row.updated_at,
                 sortable: true,
                 wrap: true,
-                width: "230px",
+                width: "250px",
               },
               {
                 name: "Created By",

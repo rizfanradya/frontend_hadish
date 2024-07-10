@@ -148,15 +148,14 @@ export default function AdminTableRole({ docTitle }: { docTitle: string }) {
                 selector: (row: any) => row.created_at,
                 sortable: true,
                 wrap: true,
-                width: "230px",
+                width: "250px",
               },
-
               {
                 name: "Updated At",
                 selector: (row: any) => row.updated_at,
                 sortable: true,
                 wrap: true,
-                width: "230px",
+                width: "250px",
               },
               {
                 name: "Created By",
