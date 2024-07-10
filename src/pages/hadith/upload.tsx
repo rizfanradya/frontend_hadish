@@ -24,7 +24,6 @@ export default function UploadHadith({
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const { register, watch, reset } = useForm<dataType>();
-  console.log(watch("upload") && watch("upload")[0]);
 
   async function onSubmit() {
     setLoading(true);

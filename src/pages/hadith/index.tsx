@@ -19,6 +19,7 @@ import {
 } from "../../utils/constant";
 import FormHadith from "./form";
 import UploadHadith from "./upload";
+import DownloadHadith from "./download";
 
 export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
   const [userInfo, setUserInfo] = useState({ role_name: "" });
@@ -124,6 +125,7 @@ export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
                     getData={hitApi}
                   />
                   <UploadHadith getData={hitApi} setGetData={setHitApi} />
+                  <DownloadHadith />
                 </div>
                 <div>
                   <Input
