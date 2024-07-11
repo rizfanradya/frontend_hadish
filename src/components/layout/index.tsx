@@ -25,6 +25,7 @@ import {
   toDashboard,
   toExpertTableHadith,
   toExpertTableHadithAssesment,
+  toExpertTableListHadith,
   toLandingPage,
 } from "../../utils/constant";
 import { IoIosPaper } from "react-icons/io";
@@ -65,7 +66,7 @@ export function linkItems(
     },
     {
       name: "List Hadish",
-      href: toExpertTableHadith,
+      href: toExpertTableListHadith,
       icon: <RiFileList2Fill size={sizeIcon} color={color} />,
       role: [roleSuperAdministrator, roleExpert],
       description:

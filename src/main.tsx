@@ -10,6 +10,7 @@ import {
   toAdminTableUser,
   toDashboard,
   toExpertTableHadithAssesment,
+  toExpertTableListHadith,
   toLandingPage,
 } from "./utils/constant";
 import { ThemeProvider } from "@material-tailwind/react";
@@ -22,6 +23,7 @@ import AdminTableTypeHadith from "./pages/typeHadith";
 import AdminTableHadith from "./pages/hadith";
 import ExpertTableHadithAssesment from "./pages/hadithAssesment";
 import LandingPage from "./pages/landingPage";
+import ListHadith from "./pages/listHadith";
 
 const documentTitle = "Fake Hadish -";
 const router = createBrowserRouter([
@@ -61,6 +63,12 @@ const router = createBrowserRouter([
       <ExpertTableHadithAssesment
         docTitle={`${documentTitle} Expert Table Hadish Assesment`}
       />
+    ),
+  },
+  {
+    path: toExpertTableListHadith,
+    element: (
+      <ListHadith docTitle={`${documentTitle} Expert Table List Hadish`} />
     ),
   },
 ]);
