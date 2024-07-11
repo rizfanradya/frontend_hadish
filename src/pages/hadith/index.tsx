@@ -69,7 +69,7 @@ export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
         const response = await axiosInstance.get(
           `/hadith/?limit=${data.limit}&offset=${data.offset}&search=${watch(
             "search"
-          )}&filter=${filter}&amount_appraisers=${amountAppraisers}`
+          )}&filter_by=${filter}&amount_of_appraisers=${amountAppraisers}`
         );
         setData(response.data);
       } catch (error) {
@@ -82,7 +82,7 @@ export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
       setLoading(false);
     }, 1000);
     return () => clearTimeout(timeoutId);
-  }, [watch("search"), hitApi, data.limit, data.offset, filter]);
+  }, [watch("search"), hitApi, data.limit, data.offset]);
 
   if (initialLoading) {
     return <LoadingSpinner fullScreen={true} />;
@@ -139,6 +139,8 @@ export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
                   <HadithFilter
                     setFilter={setFilter}
                     setAmountAppraisers={setAmountAppraisers}
+                    setGetData={setHitApi}
+                    getData={hitApi}
                   />
                   <Input
                     onPointerEnterCapture={undefined}

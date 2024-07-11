@@ -17,9 +17,13 @@ type dataType = {
 };
 
 export default function HadithFilter({
+  getData,
+  setGetData,
   setFilter,
   setAmountAppraisers,
 }: {
+  getData: boolean;
+  setGetData: Dispatch<SetStateAction<boolean>>;
   setFilter: Dispatch<SetStateAction<string>>;
   setAmountAppraisers: Dispatch<SetStateAction<string>>;
 }) {
@@ -33,10 +37,19 @@ export default function HadithFilter({
 
   function handleOpen() {
     setOpen(!open);
+  }
+
+  function handleClose() {
+    setOpen(!open);
     setFilter(watch("filter_by"));
     setAmountAppraisers(watch("amount"));
     localStorage.setItem("hadith_filter_by", watch("filter_by"));
     localStorage.setItem("hadith_amount_appraiser", watch("amount"));
+    handleRefreshData();
+  }
+
+  function handleRefreshData() {
+    setGetData(!getData);
   }
 
   return (
@@ -121,7 +134,7 @@ export default function HadithFilter({
           <Button
             variant="gradient"
             color="green"
-            onClick={handleOpen}
+            onClick={handleClose}
             className="mr-1"
             placeholder={undefined}
             onPointerEnterCapture={undefined}
