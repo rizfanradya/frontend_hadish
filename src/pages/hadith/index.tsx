@@ -171,7 +171,6 @@ export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
                 wrap: true,
                 width: "250px",
               },
-
               {
                 name: "Updated At",
                 selector: (row: any) => row.updated_at,
