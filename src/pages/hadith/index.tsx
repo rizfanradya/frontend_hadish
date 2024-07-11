@@ -21,12 +21,19 @@ import FormHadith from "./form";
 import UploadHadith from "./upload";
 import DownloadHadith from "./download";
 import HadithAssesed from "./assesed";
+import HadithFilter from "./filter";
 
 export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
   const [userInfo, setUserInfo] = useState({ role_name: "" });
   const [hitApi, setHitApi] = useState<boolean>(false);
   const [initialLoading, setInitialLoading] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(true);
+  const [filter, setFilter] = useState<string>(
+    localStorage.getItem("hadith_filter_by") || "all"
+  );
+  const [amountAppraisers, setAmountAppraisers] = useState<string>(
+    localStorage.getItem("hadith_amount_appraiser") || ""
+  );
   const { register, watch } = useForm<{ search: string }>({
     defaultValues: { search: "" },
   });
@@ -62,7 +69,7 @@ export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
         const response = await axiosInstance.get(
           `/hadith/?limit=${data.limit}&offset=${data.offset}&search=${watch(
             "search"
-          )}`
+          )}&filter=${filter}&amount_appraisers=${amountAppraisers}`
         );
         setData(response.data);
       } catch (error) {
@@ -75,7 +82,7 @@ export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
       setLoading(false);
     }, 1000);
     return () => clearTimeout(timeoutId);
-  }, [watch("search"), hitApi, data.limit, data.offset]);
+  }, [watch("search"), hitApi, data.limit, data.offset, filter]);
 
   if (initialLoading) {
     return <LoadingSpinner fullScreen={true} />;
@@ -128,7 +135,11 @@ export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
                   <UploadHadith getData={hitApi} setGetData={setHitApi} />
                   <DownloadHadith />
                 </div>
-                <div>
+                <div className="flex gap-2">
+                  <HadithFilter
+                    setFilter={setFilter}
+                    setAmountAppraisers={setAmountAppraisers}
+                  />
                   <Input
                     onPointerEnterCapture={undefined}
                     onPointerLeaveCapture={undefined}
