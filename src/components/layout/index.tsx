@@ -6,7 +6,7 @@ import NavbarDefault from "../navbar";
 import Sidebar from "../sidebar";
 import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
-import { FaBook, FaBookmark, FaUsers } from "react-icons/fa6";
+import { FaBook, FaUsers } from "react-icons/fa6";
 import { HiPresentationChartBar } from "react-icons/hi2";
 import { LiaUsersCogSolid } from "react-icons/lia";
 import DrawerDefault from "../drawer";
@@ -24,6 +24,7 @@ import {
   toAdminTableUser,
   toDashboard,
   toExpertTableHadithAssesment,
+  toExpertTableHadithEvaluate,
   toExpertTableListHadith,
   toLandingPage,
 } from "../../utils/constant";
@@ -33,6 +34,8 @@ import useSignOut from "react-auth-kit/hooks/useSignOut";
 import Swal from "sweetalert2";
 import axiosInstance from "../../utils/axiosInstance";
 import { RiFileList2Fill } from "react-icons/ri";
+import { BsBookmarkCheckFill } from "react-icons/bs";
+import { IoBook } from "react-icons/io5";
 
 export function linkItems(
   sizeIcon: number = 20,
@@ -80,9 +83,17 @@ export function linkItems(
         "Allows experts to evaluate and assess Hadish content for quality and relevance.",
     },
     {
+      name: "Hadish Evaluation",
+      href: toExpertTableHadithEvaluate,
+      icon: <BsBookmarkCheckFill size={sizeIcon} color={color} />,
+      role: [roleExpert, roleSuperAdministrator],
+      description:
+        "Allows experts to evaluate and assess Hadish content for quality and relevance.",
+    },
+    {
       name: "Type Hadish",
       href: toAdminTableTypeHadith,
-      icon: <FaBookmark size={sizeIcon} color={color} />,
+      icon: <IoBook size={sizeIcon} color={color} />,
       role: [roleAdmin, roleSuperAdministrator],
       description:
         "Facilitates the management of categories and types within the Hadish content.",

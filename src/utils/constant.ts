@@ -27,4 +27,5 @@ export const toAdminTableTypeHadith = "/dashboard/admin/type-hadith";
 export const toExpertTableHadith = "/dashboard/expert/list-hadish";
 export const toExpertTableHadithAssesment =
   "/dashboard/expert/hadish-assesment";
+export const toExpertTableHadithEvaluate = "/dashboard/expert/hadish-evaluate";
 export const toExpertTableListHadith = "/dashboard/expert/list-hadish";

@@ -10,6 +10,7 @@ import {
   toAdminTableUser,
   toDashboard,
   toExpertTableHadithAssesment,
+  toExpertTableHadithEvaluate,
   toExpertTableListHadith,
   toLandingPage,
 } from "./utils/constant";
@@ -24,6 +25,7 @@ import AdminTableHadith from "./pages/hadith";
 import ExpertTableHadithAssesment from "./pages/hadithAssesment";
 import LandingPage from "./pages/landingPage";
 import ListHadith from "./pages/listHadith";
+import HadithEvaluate from "./pages/hadithEvaluate";
 
 const documentTitle = "Fake Hadish -";
 const router = createBrowserRouter([
@@ -69,6 +71,14 @@ const router = createBrowserRouter([
     path: toExpertTableListHadith,
     element: (
       <ListHadith docTitle={`${documentTitle} Expert Table List Hadish`} />
+    ),
+  },
+  {
+    path: toExpertTableHadithEvaluate,
+    element: (
+      <HadithEvaluate
+        docTitle={`${documentTitle} Expert Table Hadish Evaluate`}
+      />
     ),
   },
 ]);

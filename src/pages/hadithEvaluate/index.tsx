@@ -1,27 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import Layout from "../../components/layout";
+import { useForm } from "react-hook-form";
 import axiosInstance from "../../utils/axiosInstance";
-import Swal from "sweetalert2";
-import { Card, Input } from "@material-tailwind/react";
-import DataTable from "react-data-table-component";
-import LoadingSpinner from "../../components/loading";
 import {
   DECODE_TOKEN,
   roleExpert,
   roleSuperAdministrator,
-  toExpertTableHadithAssesment,
+  toExpertTableHadithEvaluate,
   toLandingPage,
 } from "../../utils/constant";
-import FormHadithAssesment from "./form";
+import Swal from "sweetalert2";
+import LoadingSpinner from "../../components/loading";
+import { Card, Input } from "@material-tailwind/react";
+import DataTable from "react-data-table-component";
+import FormHadithEvaluate from "./form";
 
-export default function ExpertTableHadithAssesment({
-  docTitle,
-}: {
-  docTitle: string;
-}) {
+export default function HadithEvaluate({ docTitle }: { docTitle: string }) {
   const [userInfo, setUserInfo] = useState({ role_name: "" });
   const [hitApi, setHitApi] = useState<boolean>(false);
   const [initialLoading, setInitialLoading] = useState<boolean>(true);
@@ -64,9 +60,9 @@ export default function ExpertTableHadithAssesment({
       try {
         setLoading(true);
         const response = await axiosInstance.get(
-          `/hadith/evaluate/?limit=${data.limit}&offset=${
-            data.offset
-          }&search=${watch("search")}`
+          `/hadith_assesment/user_id/?user_id=${DECODE_TOKEN?.id}&limit=${
+            data.limit
+          }&offset=${data.offset}&search=${watch("search")}`
         );
         setData(response.data);
       } catch (error) {
@@ -93,7 +89,7 @@ export default function ExpertTableHadithAssesment({
   } else {
     return (
       <Layout
-        isActive={toExpertTableHadithAssesment}
+        isActive={toExpertTableHadithEvaluate}
         title="Hadish Assesment Table"
       >
         <Card
@@ -148,27 +144,33 @@ export default function ExpertTableHadithAssesment({
               },
               {
                 name: "Hadish Arab",
-                selector: (row) => row.hadith_arab,
+                selector: (row) => row.hadith_info.hadith_arab,
                 sortable: true,
                 width: "250px",
               },
               {
                 name: "Hadish Melayu",
-                selector: (row) => row.hadith_melayu,
+                selector: (row) => row.hadith_info.hadith_melayu,
                 sortable: true,
                 width: "250px",
               },
               {
                 name: "Explanation",
-                selector: (row) => row.explanation,
+                selector: (row) => row.hadith_info.explanation,
                 sortable: true,
                 width: "250px",
+              },
+              {
+                name: "Evaluation",
+                selector: (row) => row.evaluation_name,
+                sortable: true,
+                width: "150px",
               },
               {
                 name: "Action",
                 cell: (row: any) => (
                   <div className="flex items-center justify-center gap-4">
-                    <FormHadithAssesment
+                    <FormHadithEvaluate
                       data={row}
                       setGetData={setHitApi}
                       getData={hitApi}
