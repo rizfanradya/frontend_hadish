@@ -20,6 +20,7 @@ import {
 import FormHadith from "./form";
 import UploadHadith from "./upload";
 import DownloadHadith from "./download";
+import HadithAssesed from "./assesed";
 
 export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
   const [userInfo, setUserInfo] = useState({ role_name: "" });
@@ -210,9 +211,10 @@ export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
                     >
                       <FaTrash size={20} />
                     </div>
+                    <HadithAssesed data={row.assesed} />
                   </div>
                 ),
-                width: "150px",
+                width: "250px",
               },
             ]}
           />
