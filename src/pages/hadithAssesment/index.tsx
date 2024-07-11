@@ -66,7 +66,7 @@ export default function ExpertTableHadithAssesment({
         const response = await axiosInstance.get(
           `/hadith/evaluate/?limit=${data.limit}&offset=${
             data.offset
-          }&search=${watch("search")}`
+          }&search=${watch("search")}&user_id=${DECODE_TOKEN?.id}`
         );
         setData(response.data);
       } catch (error) {
