@@ -20,6 +20,7 @@ type dataType = {
   hadith_arab: string;
   hadith_melayu: string;
   explanation: string;
+  evaluation_id: string;
 };
 
 export default function FormHadith({
@@ -27,11 +28,13 @@ export default function FormHadith({
   mode,
   getData,
   setGetData,
+  typeHadithData,
 }: {
   data?: dataType;
   mode: string;
   getData: boolean;
   setGetData: Dispatch<SetStateAction<boolean>>;
+  typeHadithData: any[];
 }) {
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -45,12 +48,14 @@ export default function FormHadith({
           hadith_arab: watch("hadith_arab"),
           hadith_melayu: watch("hadith_melayu"),
           explanation: watch("explanation"),
+          evaluation_id: watch("evaluation_id"),
         });
       } else {
         await axiosInstance.put(`/hadith/${data?.id}`, {
           hadith_arab: watch("hadith_arab"),
           hadith_melayu: watch("hadith_melayu"),
           explanation: watch("explanation"),
+          evaluation_id: watch("evaluation_id"),
         });
       }
       handleRefreshData();
@@ -169,6 +174,28 @@ export default function FormHadith({
               error={!watch("explanation")}
               {...register("explanation")}
             />
+          </div>
+
+          <div>
+            <Typography
+              variant="h6"
+              placeholder={undefined}
+              onPointerEnterCapture={undefined}
+              onPointerLeaveCapture={undefined}
+            >
+              Evaluation
+            </Typography>
+            <select
+              {...register("evaluation_id")}
+              className="bg-gray-50 border cursor-pointer border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+              <option>-</option>
+              {typeHadithData.map((doc) => (
+                <option value={doc.id} key={doc.id}>
+                  {doc.type}
+                </option>
+              ))}
+            </select>
           </div>
         </DialogBody>
 

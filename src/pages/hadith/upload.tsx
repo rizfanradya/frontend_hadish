@@ -70,7 +70,7 @@ export default function UploadHadith({
         onPointerEnterCapture={undefined}
         onPointerLeaveCapture={undefined}
       >
-        Upload file
+        Upload hadish
       </Button>
 
       <Dialog

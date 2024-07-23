@@ -3,14 +3,14 @@ import { useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import Swal from "sweetalert2";
 
-export default function DownloadHadith() {
+export default function DownloadTemplate() {
   const [loading, setLoading] = useState<boolean>(false);
 
   async function download() {
     setLoading(true);
     try {
       await axiosInstance
-        .get(`/hadith/download`, { responseType: "blob" })
+        .get(`/hadith/template`, { responseType: "blob" })
         .then((response) => {
           const href = URL.createObjectURL(response.data);
           const link = document.createElement("a");
@@ -47,13 +47,13 @@ export default function DownloadHadith() {
       <Button
         onClick={download}
         variant="gradient"
-        color="red"
+        color="yellow"
         placeholder={undefined}
         onPointerEnterCapture={undefined}
         onPointerLeaveCapture={undefined}
         loading={loading}
       >
-        download
+        template
       </Button>
     </>
   );

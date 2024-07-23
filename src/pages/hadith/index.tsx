@@ -19,13 +19,14 @@ import {
 } from "../../utils/constant";
 import FormHadith from "./form";
 import UploadHadith from "./upload";
-import DownloadHadith from "./download";
 import HadithAssesed from "./assesed";
+import DownloadTemplate from "./downloadTemplate";
 
 export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
   const [userInfo, setUserInfo] = useState({ role_name: "" });
   const [hitApi, setHitApi] = useState<boolean>(false);
   const [initialLoading, setInitialLoading] = useState<boolean>(true);
+  const [dataTypeHadith, setDataTypeHadith] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const { register, watch } = useForm<{ search: string }>({
     defaultValues: { search: "" },
@@ -41,6 +42,10 @@ export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
     (async () => {
       try {
         const { data } = await axiosInstance.get(`/user/${DECODE_TOKEN?.id}`);
+        const typeHadithData = await axiosInstance.get(
+          `/type_hadith/?limit=999999&offset=0`
+        );
+        setDataTypeHadith(typeHadithData.data.data);
         setUserInfo(data);
       } catch (error) {
         Swal.fire({
@@ -124,9 +129,10 @@ export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
                     mode="add"
                     setGetData={setHitApi}
                     getData={hitApi}
+                    typeHadithData={dataTypeHadith}
                   />
                   <UploadHadith getData={hitApi} setGetData={setHitApi} />
-                  <DownloadHadith />
+                  <DownloadTemplate />
                 </div>
                 <div className="flex gap-2">
                   <Input
@@ -174,6 +180,7 @@ export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
                       mode="edit"
                       setGetData={setHitApi}
                       getData={hitApi}
+                      typeHadithData={dataTypeHadith}
                     />
                     <div
                       className="text-red-500 cursor-pointer"
