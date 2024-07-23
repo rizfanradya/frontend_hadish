@@ -196,7 +196,7 @@ export default function LandingPage({ docTitle }: { docTitle: string }) {
       });
       if (signInSuccess) {
         localStorage.setItem(REFRESH_TOKEN_NAME, response.data.refresh_token);
-        setTimeout(() => window.location.reload(), 200);
+        setTimeout(() => (window.location.href = toDashboard), 200);
       } else {
         handleOpenSignIn();
         Swal.fire({
