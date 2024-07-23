@@ -149,36 +149,6 @@ export default function AdminTableTypeHadith({
                 selector: (row) => row.type,
                 sortable: true,
                 wrap: true,
-                width: "250px",
-              },
-              {
-                name: "Created At",
-                selector: (row: any) => row.created_at,
-                sortable: true,
-                wrap: true,
-                width: "250px",
-              },
-
-              {
-                name: "Updated At",
-                selector: (row: any) => row.updated_at,
-                sortable: true,
-                wrap: true,
-                width: "250px",
-              },
-              {
-                name: "Created By",
-                selector: (row: any) => row.created_by_name,
-                sortable: true,
-                wrap: true,
-                width: "230px",
-              },
-              {
-                name: "Updated By",
-                selector: (row: any) => row.updated_by_name,
-                sortable: true,
-                wrap: true,
-                width: "230px",
               },
               {
                 name: "Action",
