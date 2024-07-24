@@ -14,6 +14,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { FaEdit } from "react-icons/fa";
+import { DECODE_TOKEN } from "../../utils/constant";
 
 type dataType = {
   id: number;
@@ -21,6 +22,10 @@ type dataType = {
   hadith_melayu: string;
   explanation: string;
   evaluation_id: string;
+  assesed: {
+    user_id: string;
+    evaluation_id: string;
+  }[];
 };
 
 export default function FormHadith({
@@ -38,7 +43,14 @@ export default function FormHadith({
 }) {
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const { register, watch, reset } = useForm<dataType>({ defaultValues: data });
+  const { register, watch, reset } = useForm<dataType>({
+    defaultValues: {
+      ...data,
+      evaluation_id: data?.assesed.find(
+        (doc) => doc.user_id.toString() === DECODE_TOKEN?.id.toString()
+      )?.evaluation_id,
+    },
+  });
 
   async function onSubmit() {
     try {
