@@ -21,6 +21,7 @@ import FormHadith from "./form";
 import UploadHadith from "./upload";
 import HadithAssesed from "./assesed";
 import DownloadTemplate from "./downloadTemplate";
+import DownloadHadith from "./downloadHadith";
 
 export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
   const [userInfo, setUserInfo] = useState({ role_name: "" });
@@ -133,6 +134,7 @@ export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
                   />
                   <UploadHadith getData={hitApi} setGetData={setHitApi} />
                   <DownloadTemplate />
+                  <DownloadHadith />
                 </div>
                 <div className="flex gap-2">
                   <Input
