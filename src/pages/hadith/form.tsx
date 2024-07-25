@@ -199,9 +199,11 @@ export default function FormHadith({
             </Typography>
             <select
               {...register("evaluation_id")}
-              className="bg-gray-50 border cursor-pointer border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className={`bg-gray-50 border cursor-pointer text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
+                watch("evaluation_id") ? "border-gray-300" : "border-red-300"
+              }`}
             >
-              <option>-</option>
+              {mode !== "add" && <option value="">-</option>}
               {typeHadithData.map((doc) => (
                 <option value={doc.id} key={doc.id}>
                   {doc.type}
@@ -239,7 +241,8 @@ export default function FormHadith({
             disabled={
               !watch("explanation") ||
               !watch("hadith_arab") ||
-              !watch("hadith_melayu")
+              !watch("hadith_melayu") ||
+              !watch("evaluation_id")
             }
           >
             Save
