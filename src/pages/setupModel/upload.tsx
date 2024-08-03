@@ -15,6 +15,7 @@ import Swal from "sweetalert2";
 type dataType = {
   upload: FileList;
   name: string;
+  status: string;
 };
 
 export default function UploadModel({
@@ -32,7 +33,9 @@ export default function UploadModel({
     setLoading(true);
     try {
       await axiosInstance.post(
-        `/model?name=${watch("name")}`,
+        `/model?name=${watch("name")}&status=${
+          watch("status") === "true" ? true : false
+        }`,
         {
           file: watch("upload")[0],
         },
@@ -147,6 +150,24 @@ export default function UploadModel({
                   : ""}
               </p>
             )} */}
+          </div>
+
+          <div>
+            <Typography
+              variant="h6"
+              placeholder={undefined}
+              onPointerEnterCapture={undefined}
+              onPointerLeaveCapture={undefined}
+            >
+              Status
+            </Typography>
+            <select
+              {...register("status")}
+              className="bg-gray-50 border cursor-pointer border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+              <option value="false">INACTIVE</option>
+              <option value="true">ACTIVE</option>
+            </select>
           </div>
         </DialogBody>
 

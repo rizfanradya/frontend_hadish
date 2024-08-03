@@ -17,6 +17,7 @@ import { useForm } from "react-hook-form";
 import { FaTrash } from "react-icons/fa6";
 import { DeleteData } from "../../components/deleteData";
 import UploadModel from "./upload";
+import Status from "./status";
 
 export default function SetupModel({ docTitle }: { docTitle: string }) {
   const [userInfo, setUserInfo] = useState({ role_name: "" });
@@ -144,6 +145,14 @@ export default function SetupModel({ docTitle }: { docTitle: string }) {
                 name: "File",
                 selector: (row) => row.file,
                 sortable: true,
+                wrap: true,
+                width: "400px",
+              },
+              {
+                name: "Status",
+                cell: (row: any) => (
+                  <Status doc={row} getData={hitApi} setGetData={setHitApi} />
+                ),
                 wrap: true,
               },
               {
