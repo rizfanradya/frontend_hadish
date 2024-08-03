@@ -47,10 +47,31 @@ export default function SetupModel({ docTitle }: { docTitle: string }) {
         });
       } finally {
         setInitialLoading(false);
-        setLoading(false);
       }
     })();
   }, []);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(async () => {
+      try {
+        setLoading(true);
+        const response = await axiosInstance.get(
+          `/model/?limit=${data.limit}&offset=${data.offset}&search=${watch(
+            "search"
+          )}`
+        );
+        setData(response.data);
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Server Error 404",
+          allowOutsideClick: false,
+        });
+      }
+      setLoading(false);
+    }, 1000);
+    return () => clearTimeout(timeoutId);
+  }, [watch("search"), hitApi, data.limit, data.offset]);
 
   if (initialLoading) {
     return <LoadingSpinner fullScreen={true} />;
@@ -91,7 +112,6 @@ export default function SetupModel({ docTitle }: { docTitle: string }) {
             subHeader
             subHeaderComponent={
               <div className="flex items-center justify-between w-full text-start">
-                {/* <FormRole mode="add" setGetData={setHitApi} getData={hitApi} /> */}
                 <div className="flex gap-2">
                   <UploadModel getData={hitApi} setGetData={setHitApi} />
                 </div>
@@ -116,7 +136,13 @@ export default function SetupModel({ docTitle }: { docTitle: string }) {
               },
               {
                 name: "Model",
-                selector: (row) => row.model,
+                selector: (row) => row.name,
+                sortable: true,
+                wrap: true,
+              },
+              {
+                name: "File",
+                selector: (row) => row.file,
                 sortable: true,
                 wrap: true,
               },
