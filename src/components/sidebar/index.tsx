@@ -23,7 +23,7 @@ export default function Sidebar({
 }) {
   return (
     <Card
-      className="h-[calc(100vh-2rem)] fixed z-10 w-full max-w-72 border border-black/25 p-4 shadow-xl shadow-blue-gray-900/5 hidden lg:block"
+      className="h-[calc(100vh-2rem)] fixed z-10 w-full max-w-72 border border-black/25 px-2 py-4 shadow-xl shadow-blue-gray-900/5 hidden lg:block"
       placeholder={undefined}
       onPointerEnterCapture={undefined}
       onPointerLeaveCapture={undefined}

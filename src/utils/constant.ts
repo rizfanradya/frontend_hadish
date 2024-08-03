@@ -24,6 +24,7 @@ export const toAdminTableUser = "/dashboard/admin/user";
 export const toAdminTableHadith = "/dashboard/admin/hadish";
 export const toAdminTableRole = "/dashboard/admin/role";
 export const toAdminTableTypeHadith = "/dashboard/admin/type-hadith";
+export const toAdminSetupModel = "/dashboard/admin/setup-model";
 export const toExpertTableHadith = "/dashboard/expert/list-hadish";
 export const toExpertTableHadithAssesment =
   "/dashboard/expert/hadish-assesment";

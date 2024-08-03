@@ -18,6 +18,7 @@ import {
   roleAdmin,
   roleExpert,
   roleSuperAdministrator,
+  toAdminSetupModel,
   toAdminTableHadith,
   toAdminTableRole,
   toAdminTableTypeHadith,
@@ -36,6 +37,7 @@ import axiosInstance from "../../utils/axiosInstance";
 import { RiFileList2Fill } from "react-icons/ri";
 import { BsBookmarkCheckFill } from "react-icons/bs";
 import { IoBook } from "react-icons/io5";
+import { MdSettings } from "react-icons/md";
 
 export function linkItems(
   sizeIcon: number = 20,
@@ -105,6 +107,13 @@ export function linkItems(
       role: [roleAdmin, roleSuperAdministrator],
       description:
         "Handles the administration of user roles and permissions within the system.",
+    },
+    {
+      name: "Model",
+      href: toAdminSetupModel,
+      icon: <MdSettings size={sizeIcon} color={color} />,
+      role: [roleAdmin],
+      description: "Handles the administration of model within the system.",
     },
   ];
 }

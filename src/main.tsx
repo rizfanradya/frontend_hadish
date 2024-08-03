@@ -4,6 +4,7 @@ import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import {
   ACCESS_TOKEN_NAME,
+  toAdminSetupModel,
   toAdminTableHadith,
   toAdminTableRole,
   toAdminTableTypeHadith,
@@ -26,6 +27,7 @@ import ExpertTableHadithAssesment from "./pages/hadithAssesment";
 import LandingPage from "./pages/landingPage";
 import ListHadith from "./pages/listHadith";
 import HadithEvaluate from "./pages/hadithEvaluate";
+import SetupModel from "./pages/setupModel";
 
 const documentTitle = "Fake Hadish -";
 const router = createBrowserRouter([
@@ -80,6 +82,10 @@ const router = createBrowserRouter([
         docTitle={`${documentTitle} Expert Table Hadish Evaluate`}
       />
     ),
+  },
+  {
+    path: toAdminSetupModel,
+    element: <SetupModel docTitle={`${documentTitle} Admin Table Model`} />,
   },
 ]);
 
