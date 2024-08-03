@@ -12,10 +12,9 @@ export const DECODE_TOKEN: { exp: number; id: string } | undefined =
   ACCESS_TOKEN ? jwtDecode(ACCESS_TOKEN) : undefined;
 
 // role
-export const roleSuperAdministrator = "SUPER ADMIN";
-export const roleAdmin = "ADMIN";
-export const roleExpert = "EXPERT";
-export const roleUser = "USER";
+export const roleSuperAdministrator = "super administrator";
+export const roleAdmin = "administrator";
+export const roleExpert = "expert";
 
 // path
 export const toLandingPage = "/";

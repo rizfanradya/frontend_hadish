@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
@@ -17,7 +18,7 @@ import { FaTrash } from "react-icons/fa6";
 import { DeleteData } from "../../components/deleteData";
 import UploadModel from "./upload";
 
-export default function SetupModel() {
+export default function SetupModel({ docTitle }: { docTitle: string }) {
   const [userInfo, setUserInfo] = useState({ role_name: "" });
   const [initialLoading, setInitialLoading] = useState<boolean>(true);
   const [hitApi, setHitApi] = useState<boolean>(false);
@@ -33,6 +34,7 @@ export default function SetupModel() {
   });
 
   useEffect(() => {
+    document.title = docTitle;
     (async () => {
       try {
         const { data } = await axiosInstance.get(`/user/${DECODE_TOKEN?.id}`);
