@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@material-tailwind/react";
 import { Dispatch, SetStateAction, useState } from "react";
 import Swal from "sweetalert2";
@@ -26,11 +27,11 @@ export default function Status({
           `/model/${doc.id}?name=${doc.name}&status=true`
         );
       }
-    } catch (error) {
+    } catch (error: any) {
       Swal.fire({
         icon: "error",
         title: "Server Error 404",
-        text: "Cannot Change Status",
+        text: error.response.data.detail.message,
         allowOutsideClick: false,
       });
     }
@@ -39,18 +40,20 @@ export default function Status({
   }
 
   return (
-    <Button
-      placeholder={undefined}
-      onPointerEnterCapture={undefined}
-      onPointerLeaveCapture={undefined}
-      size="sm"
-      onClick={() => onSubmit()}
-      variant="gradient"
-      color={doc.status ? "green" : "red"}
-      className="w-28"
-      loading={loading}
-    >
-      {doc.status ? "Active" : "Inactive"}
-    </Button>
+    !doc.status && (
+      <Button
+        placeholder={undefined}
+        onPointerEnterCapture={undefined}
+        onPointerLeaveCapture={undefined}
+        size="sm"
+        onClick={() => onSubmit()}
+        variant="gradient"
+        color="green"
+        className="w-full"
+        loading={loading}
+      >
+        active
+      </Button>
+    )
   );
 }

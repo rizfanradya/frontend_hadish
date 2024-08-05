@@ -11,7 +11,7 @@ import {
 import Swal from "sweetalert2";
 import LoadingSpinner from "../../components/loading";
 import Layout from "../../components/layout";
-import { Card, Input } from "@material-tailwind/react";
+import { Card, Chip, Input } from "@material-tailwind/react";
 import DataTable from "react-data-table-component";
 import { useForm } from "react-hook-form";
 import { FaTrash } from "react-icons/fa6";
@@ -113,9 +113,7 @@ export default function SetupModel({ docTitle }: { docTitle: string }) {
             subHeader
             subHeaderComponent={
               <div className="flex items-center justify-between w-full text-start">
-                <div className="flex gap-2">
-                  <UploadModel getData={hitApi} setGetData={setHitApi} />
-                </div>
+                <UploadModel getData={hitApi} setGetData={setHitApi} />
                 <div>
                   <Input
                     onPointerEnterCapture={undefined}
@@ -151,20 +149,27 @@ export default function SetupModel({ docTitle }: { docTitle: string }) {
               {
                 name: "Status",
                 cell: (row: any) => (
+                  <Chip
+                    color={row.status ? "green" : "red"}
+                    size="sm"
+                    value={row.status ? "Active" : "Inactive"}
+                    className="py-0.5 px-2 text-[11px] font-medium w-fit"
+                  />
+                ),
+                wrap: true,
+              },
+              {
+                name: "Status Act",
+                cell: (row: any) => (
                   <Status doc={row} getData={hitApi} setGetData={setHitApi} />
                 ),
                 wrap: true,
+                width: "150px",
               },
               {
                 name: "Action",
                 cell: (row: any) => (
                   <div className="flex items-center justify-center gap-4">
-                    {/* <FormRole
-                      data={row}
-                      mode="edit"
-                      setGetData={setHitApi}
-                      getData={hitApi}
-                    /> */}
                     <div
                       className="text-red-500 cursor-pointer"
                       onClick={async () =>
