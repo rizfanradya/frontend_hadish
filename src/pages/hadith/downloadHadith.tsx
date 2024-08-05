@@ -26,16 +26,23 @@ export default function DownloadHadith() {
             })
             .replace(/\//g, "-")
             .replace(/, /g, "_");
-          link.setAttribute("download", `data_hadith_${timestamp}.xlsx`);
+          link.setAttribute("download", `data_hadith_${timestamp}.csv`);
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
           URL.revokeObjectURL(href);
         });
+      Swal.fire({
+        icon: "success",
+        title: "Download Success",
+        text: "Hadith data downloaded successfully check your download folder",
+        allowOutsideClick: false,
+      });
     } catch (error) {
       Swal.fire({
         icon: "error",
         title: "Server Error 404",
+        text: "Failed to download hadith data",
         allowOutsideClick: false,
       });
     }
