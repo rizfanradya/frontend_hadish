@@ -13,9 +13,8 @@ import { FaTrash } from "react-icons/fa6";
 import {
   DECODE_TOKEN,
   roleAdmin,
-  roleSuperAdministrator,
   toAdminTableHadith,
-  toLandingPage,
+  toDashboard,
 } from "../../utils/constant";
 import FormHadith from "./form";
 import UploadHadith from "./upload";
@@ -87,11 +86,8 @@ export default function AdminTableHadith({ docTitle }: { docTitle: string }) {
     return <LoadingSpinner fullScreen={true} />;
   }
 
-  if (
-    userInfo.role_name !== roleAdmin &&
-    userInfo.role_name !== roleSuperAdministrator
-  ) {
-    window.location.href = toLandingPage;
+  if (userInfo.role_name !== roleAdmin) {
+    window.location.href = toDashboard;
   } else {
     return (
       <Layout isActive={toAdminTableHadith} title="Hadish Table">

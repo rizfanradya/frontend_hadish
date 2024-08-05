@@ -70,7 +70,7 @@ export default function DrawerDefault({
               placeholder={undefined}
               onPointerEnterCapture={undefined}
               onPointerLeaveCapture={undefined}
-              className={`${isActive === doc.href && "text-white bg-black"}`}
+              className={`${isActive === doc.href && "text-white bg-gray-800"}`}
             >
               <ListItemPrefix
                 placeholder={undefined}

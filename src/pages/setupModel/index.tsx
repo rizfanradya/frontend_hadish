@@ -6,7 +6,7 @@ import {
   DECODE_TOKEN,
   roleAdmin,
   toAdminSetupModel,
-  toLandingPage,
+  toDashboard,
 } from "../../utils/constant";
 import Swal from "sweetalert2";
 import LoadingSpinner from "../../components/loading";
@@ -79,7 +79,7 @@ export default function SetupModel({ docTitle }: { docTitle: string }) {
   }
 
   if (userInfo.role_name !== roleAdmin) {
-    window.location.href = toLandingPage;
+    window.location.href = toDashboard;
   } else {
     return (
       <Layout isActive={toAdminSetupModel} title="Model Table">

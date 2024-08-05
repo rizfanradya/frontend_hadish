@@ -56,7 +56,7 @@ export function linkItems(
       name: "User",
       href: toAdminTableUser,
       icon: <FaUsers size={sizeIcon} color={color} />,
-      role: [roleAdmin, roleSuperAdministrator],
+      role: [roleSuperAdministrator],
       description:
         "Allows administrators to manage user data and information comprehensively.",
     },
@@ -64,7 +64,7 @@ export function linkItems(
       name: "Hadish",
       href: toAdminTableHadith,
       icon: <FaBook size={sizeIcon} color={color} />,
-      role: [roleAdmin, roleSuperAdministrator],
+      role: [roleAdmin],
       description:
         "Enables content management and provides detailed information related to Hadish.",
     },
@@ -72,7 +72,7 @@ export function linkItems(
       name: "List Hadish",
       href: toExpertTableListHadith,
       icon: <RiFileList2Fill size={sizeIcon} color={color} />,
-      role: [roleSuperAdministrator, roleExpert],
+      role: [roleExpert],
       description:
         "Enables content management and provides detailed information related to Hadish.",
     },
@@ -80,7 +80,7 @@ export function linkItems(
       name: "Hadish Assessment",
       href: toExpertTableHadithAssesment,
       icon: <IoIosPaper size={sizeIcon} color={color} />,
-      role: [roleExpert, roleSuperAdministrator],
+      role: [roleExpert],
       description:
         "Allows experts to evaluate and assess Hadish content for quality and relevance.",
     },
@@ -88,7 +88,7 @@ export function linkItems(
       name: "Hadish Evaluation",
       href: toExpertTableHadithEvaluate,
       icon: <BsBookmarkCheckFill size={sizeIcon} color={color} />,
-      role: [roleExpert, roleSuperAdministrator],
+      role: [roleExpert],
       description:
         "Allows experts to evaluate and assess Hadish content for quality and relevance.",
     },
@@ -96,7 +96,7 @@ export function linkItems(
       name: "Type Hadish",
       href: toAdminTableTypeHadith,
       icon: <IoBook size={sizeIcon} color={color} />,
-      role: [roleAdmin, roleSuperAdministrator],
+      role: [roleAdmin],
       description:
         "Facilitates the management of categories and types within the Hadish content.",
     },
@@ -104,7 +104,7 @@ export function linkItems(
       name: "Role",
       href: toAdminTableRole,
       icon: <LiaUsersCogSolid size={sizeIcon} color={color} />,
-      role: [roleAdmin, roleSuperAdministrator],
+      role: [roleSuperAdministrator],
       description:
         "Handles the administration of user roles and permissions within the system.",
     },

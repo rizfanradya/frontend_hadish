@@ -11,9 +11,8 @@ import LoadingSpinner from "../../components/loading";
 import {
   DECODE_TOKEN,
   roleExpert,
-  roleSuperAdministrator,
+  toDashboard,
   toExpertTableHadithAssesment,
-  toLandingPage,
 } from "../../utils/constant";
 import FormHadithAssesment from "./form";
 
@@ -85,11 +84,8 @@ export default function ExpertTableHadithAssesment({
     return <LoadingSpinner fullScreen={true} />;
   }
 
-  if (
-    userInfo.role_name !== roleExpert &&
-    userInfo.role_name !== roleSuperAdministrator
-  ) {
-    window.location.href = toLandingPage;
+  if (userInfo.role_name !== roleExpert) {
+    window.location.href = toDashboard;
   } else {
     return (
       <Layout
