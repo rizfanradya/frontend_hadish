@@ -64,7 +64,7 @@ export default function DetailHadith({ data }: { data?: dataType }) {
           placeholder={undefined}
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}
-          className="flex flex-col gap-4 h-[calc(100vh-18rem)] overflow-y-scroll"
+          className="flex flex-col gap-4 h-[calc(100vh-10rem)] overflow-y-scroll"
         >
           <Card
             placeholder={undefined}

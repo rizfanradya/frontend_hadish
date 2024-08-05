@@ -132,7 +132,7 @@ export default function FormHadith({
           placeholder={undefined}
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}
-          className="flex flex-col gap-4 h-[calc(100vh-18rem)] overflow-y-scroll"
+          className="flex flex-col gap-4 h-[calc(100vh-10rem)] overflow-y-scroll"
         >
           <div>
             <Typography
